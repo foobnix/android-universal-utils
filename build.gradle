@@ -35,3 +35,13 @@ android {
     }
     
 }
+
+task coreLibJar(type: Jar) {
+    from fileTree(dir: 'build/classes/release').matching { 
+        include 'com/foobnix/android/utils/**' 
+        exclude 'com/foobnix/android/utils/BuildConfig.class' 
+    }
+}
+artifacts {
+    archives coreLibJar
+}
