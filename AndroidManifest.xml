@@ -9,8 +9,13 @@
      <uses-sdk
         android:minSdkVersion="4"
         android:targetSdkVersion="19" />
+     
+       <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.foobnix.android.utils" />
 
-    <application>
+    <application >
+         <uses-library android:name="android.test.runner" />
     </application>
 
 </manifest>

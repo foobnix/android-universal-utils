@@ -1,20 +1,19 @@
 package com.foobnix.android.utils;
 
-
 public class TxtUtils {
 
     public static String nullToEmpty(String txt) {
         if (txt == null) {
             return "";
         }
-        return txt;
+        return txt.trim();
     }
 
     public static String nullNullToEmpty(String txt) {
         if (txt == null || txt.trim().equals("null")) {
             return "";
         }
-        return txt;
+        return txt.trim();
     }
 
     public static boolean isEmpty(String txt) {
@@ -38,18 +37,27 @@ public class TxtUtils {
         return join(" ", items);
     }
 
-    public static String replace(String str, String... keys) {
+    /**
+     * Replace string "My name is @firstName @lastName"
+     * 
+     * @param str
+     * @param keys
+     * @return
+     */
+    public static String format$(String str, Object... keys) {
         if (str == null) {
             return null;
         }
-        for (String key : keys) {
-            int indexOf = key.indexOf("]");
-            if (indexOf == -1) {
-                continue;
+        for (Object key : keys) {
+            int start = str.indexOf("$");
+            int end = str.indexOf(" ", start);
+
+            if (end == -1) {
+                end = str.length();
             }
-            String holder = key.substring(0, indexOf + 1);
-            String value = key.substring(indexOf + 1);
-            str = str.replace(holder, nullNullToEmpty(value));
+
+            String tag = str.substring(start, end);
+            str = str.replace(tag, key.toString());
         }
         return str;
     }

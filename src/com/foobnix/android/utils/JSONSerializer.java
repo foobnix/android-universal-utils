@@ -6,7 +6,9 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +16,8 @@ import org.json.JSONObject;
 
 public class JSONSerializer {
 
+    private static final String KEY_DATE = "@date";
+    private static final String KEY_MAP = "@map";
     /**
      * 
      */
@@ -56,7 +60,7 @@ public class JSONSerializer {
                     jsonObject.put(name, value);
                 } else if (Date.class.equals(field.getType())) {
                     Date date = (Date) value;
-                    jsonObject.put(name, date.getTime());
+                    jsonObject.put(name, KEY_DATE + date.getTime());
                 } else if (List.class.equals(field.getType())) {
                     List<?> list = (List<?>) value;
 
@@ -76,6 +80,22 @@ public class JSONSerializer {
                         }
                     }
                     jsonObject.put(name, array);
+                } else if (Map.class.equals(field.getType())) {
+                    Map<?, ?> map = (Map<?, ?>) value;
+
+                    if (map.isEmpty()) {
+                        continue;
+                    }
+                    JSONArray root = new JSONArray();
+
+                    for (Object key : map.keySet()) {
+                        JSONObject child = new JSONObject();
+                        Object mapValue = map.get(key);
+                        child.put("k", key);
+                        child.put("v", mapValue);
+                        root.put(child);
+                    }
+                    jsonObject.put(name, root);
                 } else if (field.getType().isEnum()) {
                     Enum en = (Enum) value;
                     jsonObject.put(name, en.name());
@@ -104,20 +124,19 @@ public class JSONSerializer {
             String name = field.getName();
             field.setAccessible(true);
             Object value = jsonObject.opt(name);
-            if (value != null) {
-                long longValue = Long.parseLong(value.toString());
-                Date date = new Date(longValue);
-                field.set(result, date);
-            } else if (float.class.equals(field.getType())) {
-                field.setFloat(result, Float.valueOf(value.toString()));
+            LOG.d(field.getName(), field.getType(), value);
+            if (value == null) {
+                continue;
+            }
+            String valueAsString = value.toString();
+            if (valueAsString.startsWith(KEY_DATE)) {
+                valueAsString = valueAsString.replace(KEY_DATE, "");
+                field.set(result, new Date(Long.parseLong(valueAsString)));
             } else if (SIMPLE_TYPES.contains(field.getType())) {
-                LOG.d(field.getName(), field.getType(), value);
-
                 field.set(result, value);
-
             } else if (List.class.equals(field.getType())) {
                 JSONArray array = (JSONArray) value;
-                if (array.length() == 0) {
+                if (array == null || array.length() == 0) {
                     continue;
                 }
                 ParameterizedType stringListType = (ParameterizedType) field.getGenericType();
@@ -141,6 +160,14 @@ public class JSONSerializer {
                 field.set(result, listResult);
             } else if (field.getType().isEnum()) {
                 field.set(result, Enum.valueOf((Class<Enum>) field.getType(), (String) value));
+            } else if (Map.class.equals(field.getType())) {
+                Map<Object, Object> map = new HashMap<Object, Object>();
+                JSONArray array = (JSONArray) value;
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    map.put(obj.get("k"), obj.get("v"));
+                }
+                field.set(result, map);
             } else {
                 Object res = field.getType().newInstance();
                 fromJSON((JSONObject) value, res);
