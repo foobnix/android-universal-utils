@@ -10,6 +10,13 @@ public class TxtUtils {
         return txt;
     }
 
+    public static String nullNullToEmpty(String txt) {
+        if (txt == null || txt.trim().equals("null")) {
+            return "";
+        }
+        return txt;
+    }
+
     public static boolean isEmpty(String txt) {
         return txt == null || txt.trim().length() == 0;
     }
@@ -29,6 +36,22 @@ public class TxtUtils {
 
     public static String join(Object... items) {
         return join(" ", items);
+    }
+
+    public static String replace(String str, String... keys) {
+        if (str == null) {
+            return null;
+        }
+        for (String key : keys) {
+            int indexOf = key.indexOf("]");
+            if (indexOf == -1) {
+                continue;
+            }
+            String holder = key.substring(0, indexOf + 1);
+            String value = key.substring(indexOf + 1);
+            str = str.replace(holder, nullNullToEmpty(value));
+        }
+        return str;
     }
 
 }
