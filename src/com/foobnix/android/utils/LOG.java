@@ -26,13 +26,7 @@ public class LOG {
     }
 
     private static String asString(Object... statements) {
-        StringBuilder b = new StringBuilder();
-        for (Object str : statements) {
-            b.append(str);
-            b.append(DELIMITHER);
-        }
-        String string = b.toString();
-        return string;
+        return TxtUtils.join(DELIMITHER, statements);
     }
 
 }
