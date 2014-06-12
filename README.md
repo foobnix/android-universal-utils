@@ -71,6 +71,8 @@ TxtUtils.format$("My name is $first $second","a","b");//return "My name is a b";
 ```
 ## ResultResponse<T>
 ```java
+ResultResponse<T> - response listener for any type
+
 ResultResponse<Token> token = new ResultResponse<Token>() {
             
         @Override
