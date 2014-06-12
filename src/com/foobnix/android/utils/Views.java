@@ -5,6 +5,9 @@ import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +28,22 @@ public class Views {
             findViewById.setOnClickListener(onClick);
         }
         return findViewById;
+    }
+
+    public static TextView text(View view, int resId) {
+        return (TextView) view.findViewById(resId);
+    }
+
+    public static EditText editText(View view, int resId) {
+        return (EditText) view.findViewById(resId);
+    }
+
+    public static Button button(View view, int resId) {
+        return (Button) view.findViewById(resId);
+    }
+
+    public static ImageView image(View view, int resId) {
+        return (ImageView) view.findViewById(resId);
     }
 
     public static TextView text(View view, int resId, String text) {
