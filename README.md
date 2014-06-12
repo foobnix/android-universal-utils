@@ -64,7 +64,7 @@ Keyboards.close(context);
 ```java
 TxtUtils.nullToEmpty(null); // return "";
 TxtUtils.nullNullToEmpty("null"); // return "";
-TxtUtils.isEmpty("   "); // return true;
+TxtUtils.nullNullToEmpty("   "); // return "";
 TxtUtils.isEmpty("   "); // return true;
 TxtUtils.join(1,2,"a",b"); // return "1 2 a b";
 TxtUtils.format$("My name is $first $second","a","b");//return "My name is a b";
