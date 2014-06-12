@@ -6,6 +6,7 @@ The main ideas:
 * Generate Java beans from JSON, Generate Parcelable  
 [Json-To-Java-Model Generator](http://htmlpreview.github.io/?https://raw.githubusercontent.com/foobnix/android-universal-utils/master/json/generator.html)  
 ```java
+//Json-To-Java-Model Generator
 {
   "dealerId": 1,
   "userName": "First Second Name",
