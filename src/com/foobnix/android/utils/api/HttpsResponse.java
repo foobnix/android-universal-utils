@@ -1,10 +1,10 @@
 package com.foobnix.android.utils.api;
 
-public class ApiResponse<T> {
-    private int code;
-    private String response;
+public class HttpsResponse {
+    protected int code;
+    protected String response;
 
-    public ApiResponse(int code, String response) {
+    public HttpsResponse(int code, String response) {
         this.code = code;
         this.response = response;
     }
