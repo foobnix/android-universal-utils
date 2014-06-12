@@ -30,7 +30,13 @@ textView.setText("Hello World");
 Views.text(parentView, R.id.text1, "Hello World");
 Views.htmlText(parentView, R.id.text1, "<b>Hello World<b/>");
 
-Views.goneAll(R.id.text1,R.id.text2,R.id.button3);       
-        
+Views.goneAll(R.id.text1, R.id.text2, R.id.button3);
+```
+##Vh
+ViewHolder pattern for Base Adapter, link http://www.piwai.info/android-adapter-good-practices/
+```java
+View view = convertView != null ? convertView : inflater.inflate(R.layout.details, null);
 
+Vh.text(view, R.id.email, user.getEmail());
+Vh.text(view, R.id.name, user.getCustomerName());
 ```
