@@ -75,8 +75,8 @@ TxtUtils.nullToEmpty(null); // return "";
 TxtUtils.nullNullToEmpty("null"); // return "";
 TxtUtils.nullNullToEmpty("   "); // return "";
 TxtUtils.isEmpty("   "); // return true;
-TxtUtils.join(" ",1,2,"a",b"); // return "1 2 a b";
-TxtUtils.join("|","a","b","1",2"); // return "a|b|1|2";
+TxtUtils.join(" ",1,2,"a","b"); // return "1 2 a b";
+TxtUtils.join("|","a","b",1,2); // return "a|b|1|2";
 TxtUtils.format$("My name is $first $second","a","b");//return "My name is a b";
 ```
 ## ResultResponse<T>
