@@ -33,6 +33,12 @@ public class Views {
         return textView;
     }
 
+    public static TextView text(View view, int resId, int msgId) {
+        TextView textView = (TextView) view.findViewById(resId);
+        textView.setText(msgId);
+        return textView;
+    }
+
     public static TextView htmlText(View view, int resId, final String htmlText) {
         TextView textView = (TextView) view.findViewById(resId);
         if (htmlText == null) {
