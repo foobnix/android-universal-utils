@@ -85,8 +85,16 @@ TxtUtils.format$("My name is $first $second","a","b");//return "My name is a b";
 Apps.getVersionName(contex);//example "2.0.0"
 Apps.getVersionCode(contex);//example 23
 Apps.getPackageName(contex);//example "com.foobnix.android.utils"
+Apps.isPackageInstalled(context,"com.foobnix.android.utils") // return true;
 
 ```
+##Open
+```java
+Open.browser(context,"http://www.ukr.net"); //open in external browser
+Open.playMarket(context,"com.foobnix.pdf.reader"); //open in play market
+Open.call(context,"123-123-213"); //call phone number
+```
+
 ## ResultResponse<T>
 ```java
 //ResultResponse<T> - response listener for any type

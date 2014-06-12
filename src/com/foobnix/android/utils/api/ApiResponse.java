@@ -3,9 +3,8 @@ package com.foobnix.android.utils.api;
 public class ApiResponse<T> {
     private int code;
     private String response;
-    private T item;
 
-    public ApiResponse(int code, String response, Class<T> clazz) {
+    public ApiResponse(int code, String response) {
         this.code = code;
         this.response = response;
     }
@@ -24,14 +23,6 @@ public class ApiResponse<T> {
 
     public void setResponse(String response) {
         this.response = response;
-    }
-
-    public T getItem() {
-        return item;
-    }
-
-    public void setItem(T item) {
-        this.item = item;
     }
 
 }
