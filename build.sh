@@ -1,1 +1,1 @@
-gradle clean build coreLibJar
+gradle build coreLibJar

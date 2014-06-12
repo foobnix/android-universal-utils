@@ -5,7 +5,7 @@ import android.util.Log;
 public class LOG {
     public static boolean isEnable = true;
     public static String TAG = "DEBUG";
-    public static String DELIMITHER = "|";
+    public static String DELIMITER = "|";
 
     public static void printlog(String statement) {
         if (isEnable) {
@@ -26,7 +26,7 @@ public class LOG {
     }
 
     private static String asString(Object... statements) {
-        return TxtUtils.join(DELIMITHER, statements);
+        return TxtUtils.join(DELIMITER, statements);
     }
 
 }

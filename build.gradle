@@ -10,6 +10,11 @@ buildscript {
 
 apply plugin: 'android-library'
 
+ext {
+    buildVesion = ""
+}
+
+
 android {
     compileSdkVersion 19
     buildToolsVersion "19.0.3"
@@ -37,6 +42,7 @@ android {
 }
 
 task coreLibJar(type: Jar) {
+    archiveName = "android-universal-utils"+buildVesion+".jar"
     from fileTree(dir: 'build/classes/release').matching { 
         include 'com/foobnix/android/utils/**' 
         exclude 'com/foobnix/android/utils/BuildConfig.class' 
