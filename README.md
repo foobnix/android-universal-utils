@@ -79,6 +79,13 @@ TxtUtils.join(" ",1,2,"a","b"); // return "1 2 a b";
 TxtUtils.join("|","a","b",1,2); // return "a|b|1|2";
 TxtUtils.format$("My name is $first $second","a","b");//return "My name is a b";
 ```
+##Apps
+```java
+Apps.getVersionName(contex);//example "2.0.0"
+Apps.getVersionCode(contex);//example 23
+Apps.getPackageName(contex);//example "com.foobnix.android.utils"
+
+```
 ## ResultResponse<T>
 ```java
 //ResultResponse<T> - response listener for any type
@@ -90,7 +97,6 @@ ResultResponse<Token> token = new ResultResponse<Token>() {
             
         }
 };
-
 ```
 
 
