@@ -16,7 +16,8 @@ private int dealerId; //or private Integer dealerId
 private String userName;
 ```
 
-Download [android-universal-utils.jar](https://github.com/foobnix/android-universal-utils/raw/master/lib/android-universal-utils.jar)
+Download 
+[android-universal-utils.jar](https://github.com/foobnix/android-universal-utils/raw/master/lib/android-universal-utils.jar)
 
 ## LOG
 Simple add as many parameters as you need, any type. "|" - delimiter for see white spaces in the end
