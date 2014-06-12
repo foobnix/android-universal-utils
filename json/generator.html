@@ -2,6 +2,8 @@
 <html>
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
 <script>
 $(document).ready(function() {  
 
@@ -142,7 +144,8 @@ var fact = [
       var jsonp = $('#mytextarea1').val();
     
       var obj = $.parseJSON(jsonp);
-        
+      
+      var isPrimitives = $("#preferPrimitives").prop('checked');
       
       $.each(obj, function(key,value) {
           var jsType = jQuery.type(value);
@@ -158,12 +161,24 @@ var fact = [
                  }              
           }else if(jsType == "number"){
               if(jsValue.indexOf(".")>=0){
-                  javaType = "Double";
+            	  if(isPrimitives){
+            		javaType = "double";
+            	  }else{
+                  	javaType = "Double";
+            	  }
               }else{
-                  javaType = "Integer";
+            	  if(isPrimitives){
+                  	javaType = "int";
+            	  }else{
+            		  javaType = "Integer";  
+            	  }
               }
           }else if(jsType =="boolean"){
+        	  if(isPrimitives){
+        		  javaType = "boolean";
+        	  }else{
                   javaType = "Boolean";
+        	  }
           }
           map[javaKey]=javaType                
       });     
@@ -252,6 +267,9 @@ private final Date date;
          <td><input type="button" id="button1" value="Submit" /></td>
         <td><input type="button" id="button2" value="Submit" /></td>
     </tr>
+     <tr>
+         <td><input type="checkbox" id="preferPrimitives"  />Prefer Primitives</td>        
+    </tr>
 </table>
 
 
@@ -259,8 +277,10 @@ private final Date date;
 
 <br/>
 <br/>
-<span id="my" />
-
+<pre class="prettyprint">
+<code class="language-java">
+	<span id="my" ></span>
+</code></pre>
 
 </body>
 </html>
