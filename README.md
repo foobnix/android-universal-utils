@@ -59,7 +59,7 @@ boolean isOffline = Internets.isOffline(context);
 ```java
 Keyboards.hideAlways(context);
 Keyboards.close(context);
-```java
+```
 ## TxtUtils
 ```java
 TxtUtils.nullToEmpty(null); // return "";
