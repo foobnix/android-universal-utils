@@ -5,16 +5,12 @@ The main ideas:
 * Nice code, Less words, Fast development, Fan
 * Generate Java beans from JSON, Generate Parcelable  
 [Json-To-Java-Model Generator](http://htmlpreview.github.io/?https://raw.githubusercontent.com/foobnix/android-universal-utils/master/json/generator.html)  
-[Parcelable Generator](http://htmlpreview.github.io/?https://raw.githubusercontent.com/foobnix/android-universal-utils/master/json/generator.html)  
-**input JSON:**  
-```json
+```java
 {
   "dealerId": 1,
   "userName": "First Second Name",
 }
-```
-**Result Java Bean:**
-```java
+//Result
 private int dealerId; //or private Integer dealerId
 private String userName;
 ```
