@@ -34,7 +34,7 @@ public class TxtUtils {
     }
 
     public static String join(Object... items) {
-        return join(" ", items);
+        return join(" ", items).trim();
     }
 
     /**

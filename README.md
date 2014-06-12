@@ -20,7 +20,7 @@ LOG.d("Hello", "Log ", 5, Long.valueOf(99l), new Date());
 ```
 Hello|Log |5|99|Thu Jun 12 12:39:50 EET 2014|
 ```
-##Views
+## Views
 ```java
 //before
 TextView textView = (TextView) parentView.findViewById(R.id.text1);
@@ -29,14 +29,59 @@ textView.setText("Hello World");
 //now
 Views.text(parentView, R.id.text1, "Hello World");
 Views.htmlText(parentView, R.id.text1, "<b>Hello World<b/>");
+TextView name = Views.text(parentView, R.id.textName, "Name");
 
 Views.goneAll(R.id.text1, R.id.text2, R.id.button3);
 ```
-##Vh
+## Vh
 ViewHolder pattern for Base Adapter, link http://www.piwai.info/android-adapter-good-practices/
 ```java
-View view = convertView != null ? convertView : inflater.inflate(R.layout.details, null);
+View view = convertView != null ? convertView : inflater.inflate(R.layout.details, parent, false);
 
 Vh.text(view, R.id.email, user.getEmail());
 Vh.text(view, R.id.name, user.getCustomerName());
 ```
+
+##Dips
+```java
+int px = Dips.dpToPx(10);
+int dips = Dips.pxToDp(100);
+
+int screenWidthPx = Dips.screenWidth(context);
+int screenHeightPx = Dips.screenHeight(context);
+```
+## Internets
+```java
+boolean isOnline = Internets.isOnline(context);
+boolean isOffline = Internets.isOffline(context);
+```
+## Keyboards
+```java
+Keyboards.hideAlways(context);
+Keyboards.close(context);
+```java
+## TxtUtils
+```java
+TxtUtils.nullToEmpty(null); // return "";
+TxtUtils.nullNullToEmpty("null"); // return "";
+TxtUtils.isEmpty("   "); // return true;
+TxtUtils.isEmpty("   "); // return true;
+TxtUtils.join(1,2,"a",b"); // return "1 2 a b";
+TxtUtils.format$("My name is $first $second","a","b");//return "My name is a b";
+```
+## ResultResponse<T>
+```java
+ResultResponse<Token> token = new ResultResponse<Token>() {
+            
+        @Override
+        public void onResultRecive(Token result) {
+            
+        }
+};
+
+```
+
+
+
+
+
