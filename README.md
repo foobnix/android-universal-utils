@@ -4,8 +4,8 @@ This project for every Android developer for simplify daily routine work.
 The main ideas:
 * Nice code, Less words, Fast development, Fan
 * Generate Java beans from JSON, Generate Parcelable  
-[Json-To-Java-Model Generator](https://raw.githubusercontent.com/foobnix/android-universal-utils/master/json/generator.html)  
-[Parcelable Generator](https://raw.githubusercontent.com/foobnix/android-universal-utils/master/json/generator.html)  
+[Json-To-Java-Model Generator](https://cdn.rawgit.com/foobnix/android-universal-utils/master/json/generator.html)  
+[Parcelable Generator](https://cdn.rawgit.com/foobnix/android-universal-utils/master/json/generator.html)  
 **input JSON:**  
 ```json
 {
