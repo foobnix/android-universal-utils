@@ -1,5 +1,6 @@
 package com.foobnix.android.utils;
 
+
 public class TxtUtils {
 
     public static String nullToEmpty(String txt) {
@@ -30,11 +31,8 @@ public class TxtUtils {
             sb.append(it);
             sb.append(delim);
         }
-        return sb.toString().trim();
-    }
-
-    public static String join(Object... items) {
-        return join(" ", items).trim();
+        String string = sb.toString();
+        return string.substring(0, string.length() - 1);
     }
 
     /**

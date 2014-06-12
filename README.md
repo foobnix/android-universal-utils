@@ -1,11 +1,20 @@
 # Android Universal Utils
-This project for every developer for simplify daily work.
+This project for every Android developer for simplify daily routine work.
 
 The main ideas:
-* Nice code
-* Less words
-* Fast development
-* Fan
+* Nice code, Less words, Fast development, Fan
+* Generate Java beans from JSON, Generate Parcelable
+http://jsfiddle.net/foobnix/vALQ5/
+```json
+{
+  "dealerId": 1,
+  "userName": "First Second Name",
+}
+```
+```java
+private int dealerId; //or private Integer dealerId
+private String userName;
+```
 
 ## LOG
 Simple add as many parameters as you need, any type. "|" - delimiter for see white spaces in the end
@@ -66,12 +75,13 @@ TxtUtils.nullToEmpty(null); // return "";
 TxtUtils.nullNullToEmpty("null"); // return "";
 TxtUtils.nullNullToEmpty("   "); // return "";
 TxtUtils.isEmpty("   "); // return true;
-TxtUtils.join(1,2,"a",b"); // return "1 2 a b";
+TxtUtils.join(" ",1,2,"a",b"); // return "1 2 a b";
+TxtUtils.join("|","a","b","1",2"); // return "a|b|1|2";
 TxtUtils.format$("My name is $first $second","a","b");//return "My name is a b";
 ```
 ## ResultResponse<T>
 ```java
-ResultResponse<T> - response listener for any type
+//ResultResponse<T> - response listener for any type
 
 ResultResponse<Token> token = new ResultResponse<Token>() {
             
