@@ -22,7 +22,7 @@ var fact = [
         type: "String",
         read :"{v} = in.readString();",
         write :"dest.writeString({v});",
-        readJ: "{v} = ojb.getString(\"{v}\");",        
+        readJ: "{v} = obj.getString(\"{v}\");",        
         readB: "{v} = bundle.getString(\"{v}\");",
         writeB: "bundle.putString(\"{v}\",{v});"
     },
@@ -31,7 +31,7 @@ var fact = [
         type:"int",
         read :"{v} = in.readInt();",
         write :"dest.writeInt({v});",
-	    readJ: "{v} = ojb.optInt(\"{v}\");",
+	    readJ: "{v} = obj.optInt(\"{v}\");",
 	    readB: "{v} = bundle.getInt(\"{v}\");",
         writeB: "bundle.putInt(\"{v}\",{v});"
     },
@@ -39,7 +39,7 @@ var fact = [
         type:"float",
         read :"{v} = in.readFloat();",
         write :"dest.writeFloat({v});",
-        readJ: "{v} = (float) ojb.getDouble(\"{v}\");",
+        readJ: "{v} = (float) obj.getDouble(\"{v}\");",
 	    readB: "{v} = bundle.getFloat(\"{v}\");",
         writeB: "bundle.putFloat(\"{v}\",{v});"
     },
@@ -48,7 +48,7 @@ var fact = [
         type:"double",
         read :"{v} = in.readDouble();",
         write :"dest.writeDouble({v});",
-        readJ: "{v} = ojb.getDouble(\"{v}\");",
+        readJ: "{v} = obj.getDouble(\"{v}\");",
 	    readB: "{v} = bundle.getDouble(\"{v}\");",
         writeB: "bundle.putDouble(\"{v}\",{v});"
     },
@@ -56,7 +56,7 @@ var fact = [
         type:"byte",
         read :"{v} = in.readByte();",
         write :"dest.writeByte({v});",
-        readJ: "{v} = ojb.getInt(\"{v}\");",
+        readJ: "{v} = obj.getInt(\"{v}\");",
         readB: "{v} = bundle.getByte(\"{v}\");",
         writeB: "bundle.putByte(\"{v}\",{v});"
     },
@@ -64,7 +64,7 @@ var fact = [
         type:"long",
         read :"{v} = in.readLong();",
         write :"dest.writeLong({v});",
-        readJ: "{v} = ojb.getLong(\"{v}\");",
+        readJ: "{v} = obj.getLong(\"{v}\");",
         readB: "{v} = bundle.getLong(\"{v}\");",
         writeB: "bundle.putLong(\"{v}\",{v});"
     },
@@ -72,7 +72,7 @@ var fact = [
         type:"boolean",
         read :"{v} = in.readByte() == (byte)0x01;",
         write :"dest.writeByte({v} == true?(byte) 0x01 : (byte)0x00);",
-        readJ: "{v} = ojb.getBoolean(\"{v}\");",
+        readJ: "{v} = obj.getBoolean(\"{v}\");",
         readB: "{v} = bundle.getBoolean(\"{v}\");",
         writeB: "bundle.putBoolean(\"{v}\",{v});"
     },
@@ -80,7 +80,7 @@ var fact = [
         type:"Boolean",
          read :"byte t = in.readByte(); {v} = (t== (byte)0x02 ? null : t == (byte)0x01);",
          write :"dest.writeByte({v} == null ? (byte)0x02 : {v}== true ? (byte)0x01 : (byte)0x00);",
-         readJ: "{v} = ojb.getBoolean(\"{v}\");",
+         readJ: "{v} = obj.getBoolean(\"{v}\");",
          readB: "{v} = bundle.getBoolean(\"{v}\");",
          writeB: "bundle.putBoolean(\"{v}\",{v});"
     },
@@ -88,7 +88,7 @@ var fact = [
         type: "Integer",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readInt();",
          write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeInt({v});",
-         readJ: "{v} = ojb.optInt(\"{v}\");",
+         readJ: "{v} = obj.optInt(\"{v}\");",
          readB: "{v} = bundle.getInt(\"{v}\");",
          writeB: "bundle.putInt(\"{v}\",{v});"
          
@@ -97,7 +97,7 @@ var fact = [
         type: "Double",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readDouble();",
          write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeDouble({v});",
-         readJ: "{v} = ojb.optDouble(\"{v}\");",
+         readJ: "{v} = obj.optDouble(\"{v}\");",
          readB: "{v} = bundle.getDouble(\"{v}\");",
          writeB: "bundle.putDouble(\"{v}\",{v});"
          
@@ -106,7 +106,7 @@ var fact = [
         type: "Float",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readFloat();",
          write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeFloat({v});",
-         readJ: "{v} = (Float) ojb.optDouble(\"{v}\");",
+         readJ: "{v} = (Float) obj.optDouble(\"{v}\");",
          readB: "{v} = bundle.getFloat(\"{v}\");",
          writeB: "bundle.putFloat(\"{v}\",{v});"
     },
@@ -114,7 +114,7 @@ var fact = [
         type: "Long",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readLong();",
          write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeLong({v});",
-         readJ: "{v} = ojb.optLong(\"{v}\");",
+         readJ: "{v} = obj.optLong(\"{v}\");",
          readB: "{v} = bundle.getLong(\"{v}\");",
          writeB: "bundle.putLong(\"{v}\",{v});"
     },
@@ -122,7 +122,7 @@ var fact = [
         type: "Date",
          read :"{v} = in.readByte()==(byte)0x01?null:new Date(in.readLong());",
          write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeLong({v}.getTime());",
-         readJ: "{v} = ojb.opt(\"{v}\");",
+         readJ: "{v} = obj.opt(\"{v}\");",
          readB: "{v} = (Date) bundle.getSerializable(\"{v}\");",
          writeB: "bundle.putSerializable(\"{v}\",{v});"
     },
@@ -132,7 +132,7 @@ var fact = [
         type : "",
         read :"{v} = in.read???();",
         write :"dest.write???({v});",
-        readJ: "{v} = ojb.opt???(\"{v}\");",
+        readJ: "{v} = obj.opt???(\"{v}\");",
         readB: "{v} = (Date) bundle.get???(\"{v}\");",
         writeB: "bundle.put???(\"{v}\",{v});"
     }
@@ -158,7 +158,7 @@ var fact = [
                item = other;
            }               
            read += item.readJ.replace(/{v}/g,name) + "<br/>";
-           write += "ojb.put(\"{v}\",{v});".replace(/{v}/g,name)+ "<br/>";
+           write += "obj.put(\"{v}\",{v});".replace(/{v}/g,name)+ "<br/>";
            
        }
               
