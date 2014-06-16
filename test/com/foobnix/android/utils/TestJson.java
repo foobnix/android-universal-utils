@@ -7,6 +7,8 @@ import junit.framework.TestCase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Bundle;
+
 public class TestJson extends TestCase {
     private String stringName;
     
@@ -54,6 +56,32 @@ public class TestJson extends TestCase {
         ojb.put("long1", long1);
         ojb.put("long2", long2);
       
+        Bundle bundle = new Bundle();
+        stringName = bundle.getString("stringName");
+        boolean1 = bundle.getBoolean("boolean1");
+        boolean2 = bundle.getBoolean("boolean2");
+        int1 = bundle.getInt("int1");
+        int2 = bundle.getInt("int2");
+        double1 = bundle.getDouble("double1");
+        double2 = bundle.getDouble("double2");
+        float1 = bundle.getFloat("float1");
+        float2 = bundle.getDouble("float2");
+        long1 = bundle.getLong("long1");
+        long2 = bundle.getLong("long2");
+        date = (Date) bundle.getSerializable("date");
+
+        bundle.putString("stringName", stringName);
+        bundle.putBoolean("boolean1", boolean1);
+        bundle.putBoolean("boolean2", boolean2);
+        bundle.putInt("int1", int1);
+        bundle.putInt("int2", int2);
+        bundle.putDouble("double1", double1);
+        bundle.putDouble("double2", double2);
+        bundle.putFloat("float1", float1);
+        bundle.putDouble("float2", float2);
+        bundle.putLong("long1", long1);
+        bundle.putLong("long2", long2);
+        bundle.putSerializable("date", date);
 
     }
 
