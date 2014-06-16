@@ -2,9 +2,7 @@ package com.foobnix.android.utils;
 
 import java.util.Date;
 
-import android.R;
 import android.test.AndroidTestCase;
-import android.widget.TextView;
 
 public class LOGTest extends AndroidTestCase {
 
@@ -16,16 +14,9 @@ public class LOGTest extends AndroidTestCase {
         LOG.DELIMITER = "|";
 
         LOG.d("Hello", "Log", 5, Long.valueOf(99l), new Date());
+        LOG.d(null);
+        LOG.d("");
 
-        TextView name = Views.text(null, R.id.text1, "My name");
-
-        ResultResponse<Token> token = new ResultResponse<Token>() {
-
-            @Override
-            public void onResultRecive(Token result) {
-
-            }
-        };
     }
 
 }

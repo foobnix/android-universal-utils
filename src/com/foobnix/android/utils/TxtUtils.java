@@ -26,13 +26,20 @@ public class TxtUtils {
     }
 
     public static String join(String delim, Object... items) {
+        if (items == null || items.length == 0) {
+            return "";
+        }
         StringBuilder sb = new StringBuilder();
         for (Object it : items) {
             sb.append(it);
             sb.append(delim);
         }
         String string = sb.toString();
-        return string.substring(0, string.length() - 1);
+        if (string.length() > 1) {
+            return string.substring(0, string.length() - 1);
+        } else {
+            return string;
+        }
     }
 
     /**

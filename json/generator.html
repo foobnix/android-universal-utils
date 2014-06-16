@@ -21,85 +21,136 @@ var fact = [
     {
         type: "String",
         read :"{v} = in.readString();",
-        write :"dest.writeString({v});"
+        write :"dest.writeString({v});",
+        readJ: "{v} = ojb.getString(\"{v}\");"
     },
    
     {  
         type:"int",
         read :"{v} = in.readInt();",
-        write :"dest.writeInt({v});"
+        write :"dest.writeInt({v});",
+	    readJ: "{v} = ojb.optInt(\"{v}\");"
     },
     {  
         type:"float",
         read :"{v} = in.readFloat();",
-        write :"dest.writeFloat({v});"
+        write :"dest.writeFloat({v});",
+        readJ: "{v} = (float) ojb.getDouble(\"{v}\");"
     },
     
     {  
         type:"double",
         read :"{v} = in.readDouble();",
-        write :"dest.writeDouble({v});"
+        write :"dest.writeDouble({v});",
+        readJ: "{v} = ojb.getDouble(\"{v}\");"
     },
     {  
         type:"byte",
         read :"{v} = in.readByte();",
-        write :"dest.writeByte({v});"
+        write :"dest.writeByte({v});",
+        readJ: "{v} = ojb.getInt(\"{v}\");"
     },
      {  
         type:"long",
         read :"{v} = in.readLong();",
-        write :"dest.writeLong({v});"
+        write :"dest.writeLong({v});",
+        readJ: "{v} = ojb.getLong(\"{v}\");"
     },
      {  
         type:"boolean",
         read :"{v} = in.readByte() == (byte)0x01;",
-         write :"dest.writeByte({v} == true?(byte) 0x01 : (byte)0x00);"
+        write :"dest.writeByte({v} == true?(byte) 0x01 : (byte)0x00);",
+        readJ: "{v} = ojb.getBoolean(\"{v}\");"
     },
      {  
         type:"Boolean",
          read :"byte t = in.readByte(); {v} = (t== (byte)0x02 ? null : t == (byte)0x01);",
-         write :"dest.writeByte({v} == null ? (byte)0x02 : {v}== true ? (byte)0x01 : (byte)0x00);"
+         write :"dest.writeByte({v} == null ? (byte)0x02 : {v}== true ? (byte)0x01 : (byte)0x00);",
+         readJ: "{v} = ojb.getBoolean(\"{v}\");"
     },
      {
         type: "Integer",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readInt();",
-         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeInt({v});"
+         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeInt({v});",
+         readJ: "{v} = ojb.optInt(\"{v}\");"
     },
     {
         type: "Double",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readDouble();",
-         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeDouble({v});"
+         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeDouble({v});",
+         readJ: "{v} = ojb.optDouble(\"{v}\");"
+         
     },
     {
         type: "Float",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readFloat();",
-         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeFloat({v});"
+         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeFloat({v});",
+         readJ: "{v} = (Float) ojb.optDouble(\"{v}\");"
     },
     {
         type: "Long",
          read :"{v} = in.readByte()==(byte)0x01?null:in.readLong();",
-         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeLong({v});"
+         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeLong({v});",
+         readJ: "{v} = ojb.optLong(\"{v}\");"
     },
      {
         type: "Date",
          read :"{v} = in.readByte()==(byte)0x01?null:new Date(in.readLong());",
-         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeLong({v}.getTime());"
+         write :"dest.writeByte({v}==null? (byte)0x01:(byte)0x00); if({v}!=null) dest.writeLong({v}.getTime());",
+         readJ: "{v} = ojb.opt(\"{v}\");"
     },
 ]
 
     var other = {  
         type : "",
         read :"{v} = in.read???();",
-        write :"dest.write???({v});"
+        write :"dest.write???({v});",
+        readJ: "{v} = ojb.opt???(\"{v}\");"
     }
 
+
+	function printJSONOBJECT(){
+	var read = "";
+	var write = "";
+	
+	if($("#isJSONObject").prop('checked')==false){
+		return;
+	}
+
+       read = "<br/><b>JSONObject get </b><br/>";
+       write = "<br/><b>JSONObject put</b><br/>";
+    
+       for(name in map){       
+           var javaType = map[name];
+           var item = jQuery.grep(fact, function(it) {
+                return (it.type == javaType);
+            })[0];
+           if(!item){
+               item = other;
+           }               
+           read += item.readJ.replace(/{v}/g,name) + "<br/>";
+           write += "ojb.put(\"{v}\",{v});".replace(/{v}/g,name)+ "<br/>";
+           
+       }
+              
+     lang += read;             
+     lang += write;
+		
+	}
      
      function printParcable(){
-          var read = "<br/><b>Parceble read </b><br/>";
+		var read = "";
+		var write = "";
+		
+		if($("#isParcelable").prop('checked')==false){
+			return;
+		}
+	
+           read = "<br/><b>Parceble read </b><br/>";
             read += "public T(final Parcel in) {<br/>";
             
     
-          var write = "<br/><b>Parceble write </b><br/>";
+           write = "<br/><b>Parceble write </b><br/>";
         write += '@Override <br/>\
     public void writeToParcel(final Parcel dest, final int flags) {</br>';
     
@@ -145,7 +196,7 @@ var fact = [
     
       var obj = $.parseJSON(jsonp);
       
-      var isPrimitives = $("#preferPrimitives").prop('checked');
+      var isPrimitives = $("#isPrimitives").prop('checked');
       
       $.each(obj, function(key,value) {
           var jsType = jQuery.type(value);
@@ -204,14 +255,16 @@ var fact = [
      $("#button1").click(function(){
              proccess();
              printVars();
+             printJSONOBJECT();
              printParcable();
-         $('span').html(lang);                 
+         $('span#my').html(lang);                 
     });
     
     $("#button2").click(function(){
         process1();
+        printJSONOBJECT();
         printParcable();
-        $('span').html(lang);                 
+        $('span#my').html(lang);                 
     });
     
 });
@@ -241,23 +294,23 @@ var fact = [
         <td>
             
 <textarea id="mytextarea2" cols="50" rows="10" >
-private final String stringName;
+private  String stringName;
                                
-private final Boolean boolean1; 
-private final boolean boolean2; 
+private  Boolean boolean1; 
+private  boolean boolean2; 
                                 
-private final int int1;         
-private final Integer int2;     
+private  int int1;         
+private  Integer int2;     
                                 
-private final double double1;   
-private final Double double2;   
+private  double double1;   
+private  Double double2;   
                                 
-private final float float1;     
-private final Double float2;    
+private  float float1;     
+private  Double float2;    
                                 
-private final long long1;       
-private final Long long2;       
-private final Date date;         
+private  long long1;       
+private  Long long2;       
+private  Date date;         
 </textarea>
             
             
@@ -267,20 +320,19 @@ private final Date date;
          <td><input type="button" id="button1" value="Submit" /></td>
         <td><input type="button" id="button2" value="Submit" /></td>
     </tr>
-     <tr>
-         <td><input type="checkbox" id="preferPrimitives"  />Prefer Primitives</td>        
-    </tr>
 </table>
 
+<input type="checkbox" id="isPrimitives"  />Prefer Primitives<br/>
+
+<input type="checkbox" id="isJSONObject" checked="checked" />JSONObject setters getters<br/>
+<input type="checkbox" id="isParcelable"  checked="checked" />Parcelable <br/>
 
 
 
 <br/>
 <br/>
 <pre class="prettyprint">
-<code class="language-java">
-	<span id="my" ></span>
-</code></pre>
+<code class="language-java"><span id="my" ></span></code></pre>
 
 </body>
 </html>
