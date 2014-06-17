@@ -31,7 +31,7 @@ var fact = [
         type:"int",
         read :"{v} = in.readInt();",
         write :"dest.writeInt({v});",
-	    readJ: "{v} = obj.optInt(\"{v}\");",
+	    readJ: "{v} = obj.getInt(\"{v}\");",
 	    readB: "{v} = bundle.getInt(\"{v}\");",
         writeB: "bundle.putInt(\"{v}\",{v});"
     },
