@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.foobnix.android.utils;
+package com.foobnix.android.utils.ticker;
 
 import java.util.HashSet;
 import java.util.Set;
