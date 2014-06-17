@@ -3,10 +3,13 @@
  */
 package com.foobnix.android.utils.ticker;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import android.os.Handler;
+
+import com.foobnix.android.utils.LOG;
 
 /**
  * @author dmytro
@@ -19,8 +22,15 @@ public class Ticker {
 
         @Override
         public void run() {
+            LOG.d("run() listeners count=", listeners.size());
+            if (listeners.size() < 1) {
+                handler.removeCallbacks(r);
+                started = false;
+                return;
+            }
             for (OnTickListener listener : listeners) {
                 listener.onTick();
+
             }
 
             tick();
@@ -29,7 +39,7 @@ public class Ticker {
     };;
     private long period = 1000;
     private boolean started = false;
-    private final Set<OnTickListener> listeners = new HashSet<OnTickListener>();
+    private final Set<OnTickListener> listeners = Collections.newSetFromMap(new ConcurrentHashMap<OnTickListener, Boolean>());
 
     /**
      * @param period
@@ -66,17 +76,17 @@ public class Ticker {
         handler.postDelayed(r, period);
     }
 
-    public void setOnTickListener(OnTickListener listener) {
-        listeners.add(listener);
+    public void addOnTickListener(OnTickListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
+
         startTimer();
     }
 
     public void removeOnTickListener(OnTickListener listener) {
         listeners.remove(listener);
-        if (listeners.size() < 1) {
-            handler.removeCallbacks(r);
-            started = false;
-        }
+
 
     }
 
