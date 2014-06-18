@@ -36,7 +36,7 @@ public class Ticker {
             tick();
 
         }
-    };;
+    };
     private long period = 1000;
     private boolean started = false;
     private final Set<OnTickListener> listeners = Collections.newSetFromMap(new ConcurrentHashMap<OnTickListener, Boolean>());
