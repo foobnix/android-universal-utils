@@ -126,7 +126,7 @@ Func.forAll(new ResultIndexResponse<View>() {
 
     @Override
     public void onResultRecive(int pos, View view) {
-        ((Button) view).setText("Button name" + pos);
+        ((Button) view).setText("Button " + pos);
     }
 
 }, Views.findAll(this, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7));
