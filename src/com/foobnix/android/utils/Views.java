@@ -58,20 +58,20 @@ public class Views {
         return findViewById;
     }
 
-    public static TextView text(View view, int resId) {
-        return (TextView) view.findViewById(resId);
+    public static TextView text(Object view, int resId) {
+        return (TextView) find(view, resId);
     }
 
-    public static EditText editText(View view, int resId) {
-        return (EditText) view.findViewById(resId);
+    public static EditText editText(Object view, int resId) {
+        return (EditText) find(view, resId);
     }
 
-    public static Button button(View view, int resId) {
-        return (Button) view.findViewById(resId);
+    public static Button button(Object view, int resId) {
+        return (Button) find(view, resId);
     }
 
-    public static ImageView image(View view, int resId) {
-        return (ImageView) view.findViewById(resId);
+    public static ImageView image(Object view, int resId) {
+        return (ImageView) find(view, resId);
     }
 
     public static TextView text(View view, int resId, String text) {
@@ -108,9 +108,9 @@ public class Views {
         return textView;
     }
 
-    public static void goneAll(View view, int... resIds) {
+    public static void goneAll(Object view, int... resIds) {
         for (int resId : resIds) {
-            View viewById = view.findViewById(resId);
+            View viewById = find(view, resId);
             if (viewById != null) {
                 viewById.setVisibility(View.GONE);
             }
