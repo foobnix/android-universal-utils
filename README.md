@@ -130,9 +130,6 @@ Func.forAll(new ResultIndexResponse<View>() {
     }
 
 }, Views.findAll(this, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7));
-
-
-
 ```
 ## ResultResponse<T>
 ```java
