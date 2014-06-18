@@ -119,7 +119,20 @@ Func.forAll(new ResultResponse<View>() {
         view.setOnTouchListener(onTouch);
     }
 
-}, Views.getAll(this, R.id.button1, R.id.button2, R.id.button11, R.id.button21));
+}, Views.findAll(this, R.id.button1, R.id.button2, R.id.button11, R.id.button21));
+
+//With index
+Func.forAll(new ResultIndexResponse<View>() {
+
+    @Override
+    public void onResultRecive(int pos, View view) {
+        ((Button) view).setText("Button name" + pos);
+    }
+
+}, Views.findAll(this, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7));
+
+
+
 ```
 ## ResultResponse<T>
 ```java

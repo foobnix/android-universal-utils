@@ -17,10 +17,20 @@ import android.widget.TextView;
 
 public class Views {
 
-    public static List<View> getAll(Activity a, int... resIds) {
+    private static View find(Object o, int resId) {
+        if (o instanceof Activity) {
+            return ((Activity) o).findViewById(resId);
+        }
+        if (o instanceof View) {
+            return ((View) o).findViewById(resId);
+        }
+        return null;
+    }
+
+    public static List<View> findAll(Object av, int... resIds) {
         List<View> res = new ArrayList<View>(resIds.length);
         for (int id : resIds) {
-            res.add(a.findViewById(id));
+            res.add(find(av, id));
         }
         return res;
     }

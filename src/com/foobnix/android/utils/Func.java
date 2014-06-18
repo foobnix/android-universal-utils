@@ -16,4 +16,16 @@ public class Func {
         }
     }
 
+    public static <T> void forAll(ResultIndexResponse<T> result, T... views) {
+        for (int i = 0; i < views.length; i++) {
+            result.onResultRecive(i, views[i]);
+        }
+    }
+
+    public static <T> void forAll(ResultIndexResponse<T> result, List<T> views) {
+        for (int i = 0; i < views.size(); i++) {
+            result.onResultRecive(i, views.get(i));
+        }
+    }
+
 }
