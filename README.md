@@ -94,7 +94,21 @@ Open.browser(context,"http://www.ukr.net"); //open in external browser
 Open.playMarket(context,"com.foobnix.pdf.reader"); //open in play market
 Open.call(context,"123-123-213"); //call phone number
 ```
+##Reflections
+```java
+Reflections.getFieldNameForValue("ACTION_", MotionEvent.class, 2) //return ACTION_MOVE, public static final int ACTION_MOVE= 2;
 
+view.setOnDragListener(new OnDragListener() {
+
+    @Override
+    public boolean onDrag(View v, DragEvent event) {
+        LOG.d("Drag Event", event.getAction(), Reflections.getFieldNameForValue("ACTION_", DragEvent.class, event.getAction()));
+        return false;
+    }
+});
+//Drag Event:|1|ACTION_DRAG_STARTED
+//Drag Event:|4|ACTION_DRAG_ENDED
+```
 ## ResultResponse<T>
 ```java
 //ResultResponse<T> - response listener for any type
