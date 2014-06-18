@@ -17,4 +17,9 @@ public class TxtUtilsTest extends TestCase {
         assertEquals("My name is Ivan Ivanenko ", TxtUtils.format$("My name is $first $second ", "Ivan", "Ivanenko"));
         assertEquals("20 years old", TxtUtils.format$("$num years old", 20));
     }
+
+    public void test_join() {
+        assertEquals("a|b|1|2", TxtUtils.join("|", "a", "b", "1", "2"));
+        assertEquals("1 2 a b", TxtUtils.join(" ", 1, 2, "a", "b"));
+    }
 }

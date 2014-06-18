@@ -7,7 +7,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 public class Keyboards {
-	public static void hide(Activity context) {
+    public static void hideAlways(Activity context) {
 		context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 
