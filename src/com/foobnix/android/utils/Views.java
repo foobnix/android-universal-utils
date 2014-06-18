@@ -1,5 +1,8 @@
 package com.foobnix.android.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.text.Html;
 import android.view.View;
@@ -13,6 +16,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class Views {
+
+    public static List<View> getAll(Activity a, int... resIds) {
+        List<View> res = new ArrayList<View>(resIds.length);
+        for (int id : resIds) {
+            res.add(a.findViewById(id));
+        }
+        return res;
+    }
+
+    public static View findView(Activity a, View v, int viewId) {
+        if (a != null) {
+            return a.findViewById(viewId);
+        }
+        return v.findViewById(viewId);
+    }
 
     public static View click(View v, int resId, OnClickListener onClick) {
         View findViewById = v.findViewById(resId);

@@ -97,7 +97,7 @@ Open.call(context,"123-123-213"); //call phone number
 ##Reflections
 ```java
 Reflections.getFieldNameForValue("ACTION_", MotionEvent.class, 2) 
-//return ACTION_MOVE, public static final int ACTION_MOVE= 2;
+//return ACTION_MOVE, public static final int ACTION_MOVE = 2;
 
 view.setOnDragListener(new OnDragListener() {
 
@@ -109,6 +109,17 @@ view.setOnDragListener(new OnDragListener() {
 });
 //Drag Event:|1|ACTION_DRAG_STARTED
 //Drag Event:|4|ACTION_DRAG_ENDED
+```
+##Func
+```java
+Func.forAll(new ResultResponse<View>() {
+
+    @Override
+    public void onResultRecive(View view) {
+        view.setOnTouchListener(onTouch);
+    }
+
+}, Views.getAll(this, R.id.button1, R.id.button2, R.id.button11, R.id.button21));
 ```
 ## ResultResponse<T>
 ```java
