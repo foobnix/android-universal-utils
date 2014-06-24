@@ -36,7 +36,7 @@ public class TxtUtils {
         }
         String string = sb.toString();
         if (string.length() > 1) {
-            return string.substring(0, string.length() - 1);
+            return string.substring(0, string.length() - delim.length());
         } else {
             return string;
         }
