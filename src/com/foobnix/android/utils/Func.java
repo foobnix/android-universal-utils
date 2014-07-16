@@ -28,4 +28,13 @@ public class Func {
         }
     }
 
+    public static <T> T find(ResultResponse<T> onFindCriteria, List<T> views) {
+        for (T view : views) {
+            if (onFindCriteria.onResultRecive(view)) {
+                return view;
+            }
+        }
+        return null;
+    }
+
 }
