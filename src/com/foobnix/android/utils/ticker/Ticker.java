@@ -9,8 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import android.os.Handler;
 
-import com.foobnix.android.utils.LOG;
-
 /**
  * @author dmytro
  * 
@@ -22,7 +20,7 @@ public class Ticker {
 
         @Override
         public void run() {
-            LOG.d("run() listeners count=", listeners.size());
+            // LOG.d("run() listeners count=", listeners.size());
             if (listeners.size() < 1) {
                 handler.removeCallbacks(r);
                 started = false;

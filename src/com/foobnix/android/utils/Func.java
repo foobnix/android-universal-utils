@@ -2,6 +2,8 @@ package com.foobnix.android.utils;
 
 import java.util.List;
 
+import android.util.Pair;
+
 public class Func {
 
     public static <T> void forAll(ResultResponse<T> result, T... views) {
@@ -32,6 +34,16 @@ public class Func {
         for (T view : views) {
             if (onFindCriteria.onResultRecive(view)) {
                 return view;
+            }
+        }
+        return null;
+    }
+
+    public static <T> Pair<T, Integer> findIndex(ResultResponse<T> onFindCriteria, List<T> views) {
+        for (int i = 0; i < views.size(); i++) {
+            T view = views.get(i);
+            if (onFindCriteria.onResultRecive(view)) {
+                return new Pair<T, Integer>(view, i);
             }
         }
         return null;
