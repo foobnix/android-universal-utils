@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class Views {
 
-    private static View find(Object o, int resId) {
+    public static View find(Object o, int resId) {
         if (o instanceof Activity) {
             return ((Activity) o).findViewById(resId);
         }
@@ -108,18 +108,9 @@ public class Views {
         return textView;
     }
 
-    public static void goneAll(Object view, int... resIds) {
+    public static void gone(Object view, int... resIds) {
         for (int resId : resIds) {
             View viewById = find(view, resId);
-            if (viewById != null) {
-                viewById.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    public static void goneAll(Activity activty, int... resIds) {
-        for (int resId : resIds) {
-            View viewById = activty.findViewById(resId);
             if (viewById != null) {
                 viewById.setVisibility(View.GONE);
             }
