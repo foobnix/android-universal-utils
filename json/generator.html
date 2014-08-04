@@ -253,6 +253,7 @@ var fact = [
       var obj = $.parseJSON(jsonp);
       
       var isPrimitives = $("#isPrimitives").prop('checked');
+      var isDateAsString = $("#isDateAsString").prop('checked');
       
       $.each(obj, function(key,value) {
           var jsType = jQuery.type(value);
@@ -264,7 +265,11 @@ var fact = [
           if(jsType == "string"){
               javaType = "String";
               if(jsKey.toLowerCase().indexOf("date")>=0){
+              		
                     javaType = "Date";    
+                    if(isDateAsString){
+                    	javaType = "String";
+                    }
                  }              
           }else if(jsType == "number"){
               if(jsValue.indexOf(".")>=0){
@@ -385,6 +390,7 @@ private  Date date;
 <input type="checkbox" id="isBundle" checked="checked" />Bundle<br/>
 <input type="checkbox" id="isJSONObject" checked="checked" />JSONObject<br/>
 <input type="checkbox" id="isParcelable"  checked="checked" />Parcelable <br/>
+<input type="checkbox" id="isDateAsString" />Date As String<br/>
 
 
 
