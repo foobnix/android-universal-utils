@@ -46,7 +46,7 @@ public class Func {
                 return new Pair<T, Integer>(view, i);
             }
         }
-        return null;
+        return new Pair<T, Integer>(null, -1);
     }
 
 }

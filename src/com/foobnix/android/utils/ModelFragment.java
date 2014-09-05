@@ -40,5 +40,11 @@ public abstract class ModelFragment<T extends Serializable> extends Fragment {
         outState.putSerializable(EXTRA_FRAGMENT_MODEL, model);
         super.onSaveInstanceState(outState);
     }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
 
 }

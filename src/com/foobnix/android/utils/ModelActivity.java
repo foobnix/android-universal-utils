@@ -41,4 +41,10 @@ public abstract class ModelActivity<T extends Serializable> extends Activity {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
+
 }
