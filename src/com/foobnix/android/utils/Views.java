@@ -75,20 +75,20 @@ public class Views {
         return (ImageView) find(view, resId);
     }
 
-    public static TextView text(final View view, final int resId, final String text) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView text(final Object view, final int resId, final String text) {
+        TextView textView = (TextView) find(view, resId);
         textView.setText(text);
         return textView;
     }
 
-    public static TextView text(final View view, final int resId, final int msgId) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView text(final Object view, final int resId, final int msgId) {
+        TextView textView = (TextView) find(view, resId);
         textView.setText(msgId);
         return textView;
     }
 
-    public static TextView htmlText(final View view, final int resId, final String htmlText) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView htmlText(final Object view, final int resId, final String htmlText) {
+        TextView textView = (TextView) find(view, resId);
         if (htmlText == null) {
             textView.setText("");
         } else {
@@ -101,8 +101,8 @@ public class Views {
         return textView;
     }
 
-    public static TextView textIfFind(final View view, final int resId, final String text) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView textIfFind(Object view, final int resId, final String text) {
+        TextView textView = (TextView) find(view, resId);
         if (textView != null) {
             textView.setText(text);
         }
@@ -132,6 +132,12 @@ public class Views {
     }
 
     public static void unselect(final View... viewIds) {
+        for (View view : viewIds) {
+            view.setSelected(false);
+        }
+    }
+
+    public static void unchecked(final View... viewIds) {
         for (View view : viewIds) {
             view.setSelected(false);
         }

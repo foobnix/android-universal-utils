@@ -31,12 +31,16 @@ public abstract class ModelActivity<T extends Serializable> extends Activity {
                 LOG.e(e);
             }
         }
+
     }
 
     public abstract void populateModel();
 
+    public abstract void saveModel();
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        saveModel();
         outState.putSerializable(EXTRA_FRAGMENT_MODEL, model);
         super.onSaveInstanceState(outState);
     }
