@@ -28,7 +28,7 @@ public abstract class ModelActivity<T extends Serializable> extends Activity {
             try {
                 model = clazz.newInstance();
             } catch (Exception e) {
-                LOG.e(e);
+                throw new RuntimeException(e.getCause());
             }
         }
 

@@ -28,7 +28,7 @@ public abstract class ModelFragment<T extends Serializable> extends Fragment {
             try {
                 model = clazz.newInstance();
             } catch (Exception e) {
-                LOG.e(e);
+                throw new RuntimeException(e.getCause());
             }
         }
     }

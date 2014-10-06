@@ -256,6 +256,9 @@ var fact = [
       var isDateAsString = $("#isDateAsString").prop('checked');
       
       $.each(obj, function(key,value) {
+          if(value==null){
+          	value="";
+          }
           var jsType = jQuery.type(value);
           var jsValue = value.toString();
           var jsKey = key;
