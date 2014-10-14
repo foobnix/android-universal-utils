@@ -131,6 +131,18 @@ Func.forAll(new ResultIndexResponse<View>() {
 
 }, Views.findAll(this, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7));
 ```
+## BaseItemAdapter<T>
+```java
+private BaseItemAdapter<SearchItem> adapter = new BaseItemAdapter<SearchItem>() {
+
+@Override
+public View getView(int possition, View convertView, ViewGroup parent, SearchItem item) {
+    ...
+    return view;
+}
+
+};
+```
 ## ResultResponse<T>
 ```java
 //ResultResponse<T> - response listener for any type
