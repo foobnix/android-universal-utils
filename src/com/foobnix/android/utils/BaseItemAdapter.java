@@ -12,7 +12,8 @@ public abstract class BaseItemAdapter<T> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return getView(position, convertView, parent, getItem(position));
+        T item = getItem(position);
+        return getView(position, convertView, parent, item);
     }
 
     public abstract View getView(int position, View convertView, ViewGroup parent, T item);
@@ -29,6 +30,13 @@ public abstract class BaseItemAdapter<T> extends BaseAdapter {
 
     public List<T> getItems() {
         return items;
+    }
+
+    public void addItems(List<T> items) {
+        for (T t : items) {
+            this.items.add(t);
+        }
+        notifyDataSetChanged();
     }
 
     public void setItems(List<T> items) {
