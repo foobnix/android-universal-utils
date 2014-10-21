@@ -41,7 +41,7 @@ public class Open {
 
     public static void map(Context c, String label) {
         StringBuilder res = new StringBuilder();
-        res.append(String.format(Locale.ENGLISH, "geo:0,0&q=%s", label));
+        res.append(String.format(Locale.ENGLISH, "geo:0,0?q=%s", label));
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(res.toString()));
         c.startActivity(intent);
     }
