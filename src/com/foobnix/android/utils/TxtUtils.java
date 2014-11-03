@@ -1,5 +1,6 @@
 package com.foobnix.android.utils;
 
+import java.util.List;
 
 public class TxtUtils {
 
@@ -23,6 +24,23 @@ public class TxtUtils {
 
     public static boolean isNotEmpty(String txt) {
         return !isEmpty(txt);
+    }
+
+    public static String joinList(String delim, List<?> items) {
+        if (items == null || items.size() == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Object it : items) {
+            sb.append(it);
+            sb.append(delim);
+        }
+        String string = sb.toString();
+        if (string.length() > 1) {
+            return string.substring(0, string.length() - delim.length());
+        } else {
+            return string;
+        }
     }
 
     public static String join(String delim, Object... items) {

@@ -10,6 +10,14 @@ import android.widget.BaseAdapter;
 public abstract class BaseItemAdapter<T> extends BaseAdapter {
     private List<T> items = new ArrayList<T>();
 
+    public BaseItemAdapter() {
+
+    }
+
+    public BaseItemAdapter(List<T> list) {
+        addItems(list);
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         T item = getItem(position);
