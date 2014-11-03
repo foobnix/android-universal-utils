@@ -30,6 +30,25 @@ LOG.d("Hello", "Log ", 5, Long.valueOf(99l), new Date());
 ```
 Hello|Log |5|99|Thu Jun 12 12:39:50 EET 2014|
 ```
+## Resource Injector
+Inject views by it names as id
+```java
+@ResId EditText editAddress1, editAddress2, editCompanyName;
+@ResId Spinner spinnerCountry, spinnerState;
+@ResId CheckBox checkPrivateSeller;
+...
+View view = inflater.inflate(R.layout.my_account, container, false);
+ResInjector.inject(view, this);
+
+spinnerCountry.setAdapter(new BaseItemLayoutAdapter<Country>(getActivity(), android.R.layout.simple_spinner_item, countries) {
+
+    @Override
+    public void populateView(View view, int pos, Country item) {
+        Views.text(view, android.R.id.text1).setText(item.getName());
+
+    }
+});
+```
 ## Views
 ```java
 //before

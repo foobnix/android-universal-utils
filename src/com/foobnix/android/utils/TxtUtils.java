@@ -4,11 +4,11 @@ import java.util.List;
 
 public class TxtUtils {
 
-    public static String nullToEmpty(String txt) {
+    public static String nullToEmpty(Object txt) {
         if (txt == null) {
             return "";
         }
-        return txt.trim();
+        return txt instanceof String ? ((String) txt).trim() : txt.toString();
     }
 
     public static String nullNullToEmpty(String txt) {
