@@ -48,6 +48,17 @@ spinnerCountry.setAdapter(new BaseItemLayoutAdapter<Country>(getActivity(), andr
 
     }
 });
+
+@ResIdOnClick //or @ResIdOnClick(R.id.buttonSave)
+public void buttonSave() {
+   saveModel();
+}
+
+@ResIdOnLongClick(R.id.buttonSave)
+public void buttonSaveLongClickAnyName() {
+   Toast.makeText(getActivity(), "Long click", Toast.LENGTH_SHORT).show();
+}
+
 ```
 ## Views
 ```java
