@@ -202,6 +202,53 @@ ResultResponse<Token> token = new ResultResponse<Token>() {
         }
 };
 ```
+## Application State Pattern
+```java
+public class AppState {
+    private static AppState instance = new AppState();
+    static SharedPreferences sharedPreferences;
+
+    public SellerAccount sellerAccount;
+    public UserProfile userProfile;
+    public Dictionaries dictionaries;
+    public UserCredential userCredential;
+    public Ticket ticket;
+
+    private final Gson gson = new Gson();
+
+    public static AppState get() {
+        return instance;
+    }
+
+    public synchronized void save() {
+        sharedPreferences.edit()//
+                .putString("ticket", gson.toJson(ticket, Ticket.class).toString())//
+                .putString("sellerAccount", gson.toJson(sellerAccount, SellerAccount.class).toString())//
+                .putString("userProfile", gson.toJson(userProfile, UserProfile.class).toString())//
+                .putString("dictionaries", gson.toJson(dictionaries, Dictionaries.class).toString())//
+                .putString("userCredential", gson.toJson(userCredential, UserCredential.class).toString())//
+                .commit();
+    }
+
+    public synchronized void load(Context context) {
+        sharedPreferences = context.getSharedPreferences("partsbee", Context.MODE_PRIVATE);
+
+        ticket = gson.fromJson(sharedPreferences.getString("ticket", null), Ticket.class);
+        sellerAccount = gson.fromJson(sharedPreferences.getString("sellerAccount", null), SellerAccount.class);
+        userProfile = gson.fromJson(sharedPreferences.getString("userProfile", null), UserProfile.class);
+        dictionaries = gson.fromJson(sharedPreferences.getString("dictionaries", null), Dictionaries.class);
+        userCredential = gson.fromJson(sharedPreferences.getString("userCredential", null), UserCredential.class);
+    }
+}
+
+//Inside Application or Service
+AppState.get().load(this);
+
+//Save states
+AppState.get().save();
+```
+
+
 
 
 
