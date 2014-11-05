@@ -68,10 +68,14 @@ textView.setText("Hello World");
 
 //now
 Views.text(parentView, R.id.text1, "Hello World");
+
+//html
 Views.htmlText(parentView, R.id.text1, "<b>Hello World<b/>");
 TextView name = Views.text(parentView, R.id.textName, "Name");
 
-Views.goneAll(R.id.text1, R.id.text2, R.id.button3);
+//multiple action
+Views.gone(R.id.text1, R.id.text2, R.id.button3);
+Views.unselect(R.id.select1, R.id.select2, R.id.select3);
 ```
 ## Vh
 ViewHolder pattern for Base Adapter, link http://www.piwai.info/android-adapter-good-practices/
