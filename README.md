@@ -160,6 +160,23 @@ Func.forAll(new ResultIndexResponse<View>() {
     }
 
 }, Views.findAll(this, R.id.b1, R.id.b2, R.id.b3, R.id.b4, R.id.b5, R.id.b6, R.id.b7));
+
+//find index
+spinnerCountry.setSelection(Func.findIndex(new ResultResponse<Country>() {
+    @Override
+    public boolean onResultRecive(Country arg0) {
+        return arg0.getId().equals(sellerAccount.getCountryId());
+    }
+}, AppState.get().getCountries()).second);
+
+//filter lists
+List<State> filtered = Func.filter(new ResultResponse<State>() {
+
+                    @Override
+                    public boolean onResultRecive(State arg0) {
+                        return arg0.getCountryId().equals(country.getId());
+                    }
+                }, AppState.get().getStates());
 ```
 ## BaseItemAdapter<T>
 ```java
