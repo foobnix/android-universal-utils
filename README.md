@@ -13,7 +13,7 @@ This project for every Android developer for simplify daily routine work.
 private int dealerId; //or private Integer dealerId
 private String userName;
 ```
-### Download 
+### Download latest Android Universal Utils .jar
 [android-universal-utils.jar](https://github.com/foobnix/android-universal-utils/raw/master/lib/android-universal-utils.jar)
 ## LOG
 Simple add as many parameters as you need, any type. "|" - delimiter for see white spaces in the end
