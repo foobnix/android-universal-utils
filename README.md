@@ -71,7 +71,6 @@ Views.text(parentView, R.id.text1, "Hello World");
 
 //html
 Views.htmlText(parentView, R.id.text1, "<b>Hello World<b/>");
-TextView name = Views.text(parentView, R.id.textName, "Name");
 
 //multiple action
 Views.gone(R.id.text1, R.id.text2, R.id.button3);
