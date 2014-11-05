@@ -6,12 +6,33 @@ This project for every Android developer for simplify daily routine work.
 ```java
 //Json-To-Java-Model Generator
 {
-  "dealerId": 1,
-  "userName": "First Second Name",
+    "auctionHouse": "sample string 1",
+    "bidDate": "2014-05-30T08:20:38.5426521-04:00 ",
+    "bidPrice": 3,
+    "bidPrice1": 3.1,
+    "isYear":true
 }
-//Result
-private int dealerId; //or private Integer dealerId
-private String userName;
+//Result Java Class
+private String  auctionHouse;
+private Date  bidDate;
+private int  bidPrice;
+private double  bidPrice1;
+private boolean  isYear;
+
+
+//JSONObject get (Optional)
+auctionHouse = obj.getString("auctionHouse");
+bidDate = obj.opt("bidDate");
+bidPrice = obj.getInt("bidPrice");
+bidPrice1 = obj.getDouble("bidPrice1");
+isYear = obj.getBoolean("isYear");
+
+//JSONObject put (Optional)
+obj.put("auctionHouse",auctionHouse);
+obj.put("bidDate",bidDate);
+obj.put("bidPrice",bidPrice);
+obj.put("bidPrice1",bidPrice1);
+obj.put("isYear",isYear);
 ```
 ### Download latest Android Universal Utils .jar
 [android-universal-utils.jar](https://github.com/foobnix/android-universal-utils/raw/master/lib/android-universal-utils.jar)
