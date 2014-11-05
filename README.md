@@ -239,7 +239,7 @@ public synchronized void save() {
 }
 
 public synchronized void load(Context context) {
-	sharedPreferences = context.getSharedPreferences("partsbee", Context.MODE_PRIVATE);
+	sharedPreferences = context.getSharedPreferences("myapp", Context.MODE_PRIVATE);
 	sellerAccount = gson.fromJson(sharedPreferences.getString("sellerAccount", null), SellerAccount.class);
 	userProfile = gson.fromJson(sharedPreferences.getString("userProfile", null), UserProfile.class);
 	}
