@@ -12,18 +12,21 @@ This project for every Android developer for simplify daily routine work.
     "bidPrice1": 3.1,
     "isYear":true
 }
-//Result Java Class
+
+//Result Java Class with Fields
 private String  auctionHouse;
 private Date  bidDate;
 private int  bidPrice;
 private double  bidPrice1;
 private boolean  isYear;
+
 //JSONObject get (Optional)
 auctionHouse = obj.getString("auctionHouse");
 bidDate = obj.opt("bidDate");
 bidPrice = obj.getInt("bidPrice");
 bidPrice1 = obj.getDouble("bidPrice1");
 isYear = obj.getBoolean("isYear");
+
 //JSONObject put (Optional)
 obj.put("auctionHouse",auctionHouse);
 obj.put("bidDate",bidDate);
