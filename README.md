@@ -189,6 +189,17 @@ public View getView(int possition, View convertView, ViewGroup parent, SearchIte
 }
 
 };
+
+
+final BaseItemLayoutAdapter<State> stateAdapter = new BaseItemLayoutAdapter<State>(getActivity(), android.R.layout.simple_spinner_dropdown_item) {
+
+    @Override
+    public void populateView(View inflate, int arg1, State arg2) {
+        TextView text = Views.text(inflate, android.R.id.text1);
+        text.setText(arg2.getName());
+    }
+};
+
 ```
 ## ResultResponse<T>
 ```java
@@ -210,9 +221,6 @@ public class AppState {
 
     public SellerAccount sellerAccount;
     public UserProfile userProfile;
-    public Dictionaries dictionaries;
-    public UserCredential userCredential;
-    public Ticket ticket;
 
     private final Gson gson = new Gson();
 
@@ -220,25 +228,18 @@ public class AppState {
         return instance;
     }
 
-    public synchronized void save() {
-        sharedPreferences.edit()//
-                .putString("ticket", gson.toJson(ticket, Ticket.class).toString())//
-                .putString("sellerAccount", gson.toJson(sellerAccount, SellerAccount.class).toString())//
-                .putString("userProfile", gson.toJson(userProfile, UserProfile.class).toString())//
-                .putString("dictionaries", gson.toJson(dictionaries, Dictionaries.class).toString())//
-                .putString("userCredential", gson.toJson(userCredential, UserCredential.class).toString())//
-                .commit();
-    }
+public synchronized void save() {
+	sharedPreferences.edit()//
+        .putString("sellerAccount", gson.toJson(sellerAccount, SellerAccount.class).toString())//
+        .putString("userProfile", gson.toJson(userProfile, UserProfile.class).toString())//
+        .commit();
+}
 
-    public synchronized void load(Context context) {
-        sharedPreferences = context.getSharedPreferences("partsbee", Context.MODE_PRIVATE);
-
-        ticket = gson.fromJson(sharedPreferences.getString("ticket", null), Ticket.class);
-        sellerAccount = gson.fromJson(sharedPreferences.getString("sellerAccount", null), SellerAccount.class);
-        userProfile = gson.fromJson(sharedPreferences.getString("userProfile", null), UserProfile.class);
-        dictionaries = gson.fromJson(sharedPreferences.getString("dictionaries", null), Dictionaries.class);
-        userCredential = gson.fromJson(sharedPreferences.getString("userCredential", null), UserCredential.class);
-    }
+public synchronized void load(Context context) {
+	sharedPreferences = context.getSharedPreferences("partsbee", Context.MODE_PRIVATE);
+	sellerAccount = gson.fromJson(sharedPreferences.getString("sellerAccount", null), SellerAccount.class);
+	userProfile = gson.fromJson(sharedPreferences.getString("userProfile", null), UserProfile.class);
+	}
 }
 
 //Inside Application or Service
