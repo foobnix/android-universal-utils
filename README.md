@@ -18,15 +18,12 @@ private Date  bidDate;
 private int  bidPrice;
 private double  bidPrice1;
 private boolean  isYear;
-
-
 //JSONObject get (Optional)
 auctionHouse = obj.getString("auctionHouse");
 bidDate = obj.opt("bidDate");
 bidPrice = obj.getInt("bidPrice");
 bidPrice1 = obj.getDouble("bidPrice1");
 isYear = obj.getBoolean("isYear");
-
 //JSONObject put (Optional)
 obj.put("auctionHouse",auctionHouse);
 obj.put("bidDate",bidDate);
