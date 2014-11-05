@@ -1,9 +1,7 @@
 # Android Universal Utils
 This project for every Android developer for simplify daily routine work.
 
-The main ideas:
-* Nice code, Less words, Fast development, Fan
-* Generate Java beans from JSON, Generate Parcelable  
+### JSON to Java Online Generator
 <a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/foobnix/android-universal-utils/master/json/generator.html" target="_blank">Json-To-Java-Model Generator</a>  
 ```java
 //Json-To-Java-Model Generator
