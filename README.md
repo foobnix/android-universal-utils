@@ -195,8 +195,8 @@ final BaseItemLayoutAdapter<State> stateAdapter = new BaseItemLayoutAdapter<Stat
 
     @Override
     public void populateView(View inflate, int arg1, State arg2) {
-        TextView text = Views.text(inflate, android.R.id.text1);
-        text.setText(arg2.getName());
+	Views.text(inflate, android.R.id.text1, arg2.getName());
+	Views.text(inflate, android.R.id.text2, arg2.getDisplayName());
     }
 };
 
