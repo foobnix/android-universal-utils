@@ -119,7 +119,12 @@ public class ResInjector {
                     @Override
                     public void onClick(View v) {
                         try {
-                            method.invoke(obj);
+                            Class<?>[] parameterTypes = method.getParameterTypes();
+                            if (parameterTypes.length == 1) {
+                                method.invoke(obj, v);
+                            } else {
+                                method.invoke(obj);
+                            }
                         } catch (Exception e) {
                             LOG.e(e);
                         }
@@ -140,7 +145,12 @@ public class ResInjector {
                     @Override
                     public boolean onLongClick(View v) {
                         try {
-                            method.invoke(obj);
+                            Class<?>[] parameterTypes = method.getParameterTypes();
+                            if (parameterTypes.length == 1) {
+                                method.invoke(obj, v);
+                            } else {
+                                method.invoke(obj);
+                            }
                         } catch (Exception e) {
                             LOG.e(e);
                         }
