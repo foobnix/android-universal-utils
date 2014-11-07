@@ -69,9 +69,9 @@ public abstract class ModelFragment<T extends Serializable> extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         saveModel();
         outState.putSerializable(EXTRA_FRAGMENT_MODEL, model);
-        super.onSaveInstanceState(outState);
         if (outState != null && onSaveInstanceState != null) {
             onSaveInstanceState.onResultRecive(outState);
         }

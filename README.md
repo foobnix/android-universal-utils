@@ -292,8 +292,76 @@ AppState.get().load(this);
 //Save states
 AppState.get().save();
 ```
+##Model Example
+```java
+public class ExampleFragment extends ModelFragment<User> {
 
+    @ResId  
+    EditText textLogin, textPassword;
 
+    @ResId 
+    CheckBox checkboxAggrement;
+
+    @ExtraArgument_1 
+    int currentTab;
+
+    @SaveState 
+    boolean isSignAgreement;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_user, container, false);
+        ResInjector.inject(view, this, savedInstanceState);
+
+        activeTab(currentTab);
+        populateModel();
+        return view;
+    }
+
+    @ResIdOnClick(R.id.onLogin)
+    public void onLogin() {
+        saveModel();
+        doLoginUser(model);
+    }
+
+    @Override
+    public void populateModel() {
+        checkboxAggrement.setChecked(isSignAgreement);
+        textLogin.setText(model.getName());
+    }
+
+    @Override
+    public void saveModel() {
+        model.setName(textLogin.getText().toString());
+    }
+
+}
+```
+## Simple Fragment Example
+```java
+public class SimpleExampleFragment extends EmptyModelFragment {
+
+    @ResId EditText textLogin, textPassword;
+
+    @ExtraArgument_1 int currentTab;
+
+    @SaveState boolean myValue;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_user, container, false);
+        ResInjector.inject(view, this, savedInstanceState);
+
+        return view;
+    }
+
+    @ResIdOnClick(R.id.onLogin)
+    public void doAction() {
+
+    }
+
+}
+```
 
     Copyright 2011-2014 Ivan Ivanenko
 
