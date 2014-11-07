@@ -19,4 +19,12 @@ public class LOGTest extends AndroidTestCase {
 
     }
 
+    public void testLogWithInfo() {
+        LOG.TAG = "DEBUG";
+        LOG.DELIMITER = "|";
+        LOG.dMeta(true, "Hello", "Log", 5, Long.valueOf(99l), new Date());
+        LOG.dMeta(true, null);
+        LOG.dMeta(true, "");
+    }
+
 }
