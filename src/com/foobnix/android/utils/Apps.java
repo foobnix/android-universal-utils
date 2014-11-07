@@ -2,14 +2,13 @@ package com.foobnix.android.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
 public class Apps {
 
     public static boolean isPackageInstalled(String packageName, Context context) {
         try {
-            context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            context.getPackageManager().getPackageInfo(packageName, 0);
             return true;
         } catch (NameNotFoundException e) {
             return false;

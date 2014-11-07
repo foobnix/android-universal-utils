@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class Views {
 
-    private static View find(Object o, int resId) {
+    public static View find(final Object o, final int resId) {
         if (o instanceof Activity) {
             return ((Activity) o).findViewById(resId);
         }
@@ -27,7 +28,7 @@ public class Views {
         return null;
     }
 
-    public static List<View> findAll(Object av, int... resIds) {
+    public static List<View> findAll(final Object av, final int... resIds) {
         List<View> res = new ArrayList<View>(resIds.length);
         for (int id : resIds) {
             res.add(find(av, id));
@@ -35,14 +36,14 @@ public class Views {
         return res;
     }
 
-    public static View findView(Activity a, View v, int viewId) {
+    public static View findView(final Activity a, final View v, final int viewId) {
         if (a != null) {
             return a.findViewById(viewId);
         }
         return v.findViewById(viewId);
     }
 
-    public static View click(View v, int resId, OnClickListener onClick) {
+    public static View click(final View v, final int resId, final OnClickListener onClick) {
         View findViewById = v.findViewById(resId);
         if (onClick != null) {
             findViewById.setOnClickListener(onClick);
@@ -50,7 +51,7 @@ public class Views {
         return findViewById;
     }
 
-    public static View click(Activity a, int resId, OnClickListener onClick) {
+    public static View click(final Activity a, final int resId, final OnClickListener onClick) {
         View findViewById = a.findViewById(resId);
         if (onClick != null) {
             findViewById.setOnClickListener(onClick);
@@ -58,36 +59,36 @@ public class Views {
         return findViewById;
     }
 
-    public static TextView text(View view, int resId) {
-        return (TextView) view.findViewById(resId);
+    public static TextView text(final Object view, final int resId) {
+        return (TextView) find(view, resId);
     }
 
-    public static EditText editText(View view, int resId) {
-        return (EditText) view.findViewById(resId);
+    public static EditText editText(final Object view, final int resId) {
+        return (EditText) find(view, resId);
     }
 
-    public static Button button(View view, int resId) {
-        return (Button) view.findViewById(resId);
+    public static Button button(final Object view, final int resId) {
+        return (Button) find(view, resId);
     }
 
-    public static ImageView image(View view, int resId) {
-        return (ImageView) view.findViewById(resId);
+    public static ImageView image(final Object view, final int resId) {
+        return (ImageView) find(view, resId);
     }
 
-    public static TextView text(View view, int resId, String text) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView text(final Object view, final int resId, final String text) {
+        TextView textView = (TextView) find(view, resId);
         textView.setText(text);
         return textView;
     }
 
-    public static TextView text(View view, int resId, int msgId) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView text(final Object view, final int resId, final int msgId) {
+        TextView textView = (TextView) find(view, resId);
         textView.setText(msgId);
         return textView;
     }
 
-    public static TextView htmlText(View view, int resId, final String htmlText) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView htmlText(final Object view, final int resId, final String htmlText) {
+        TextView textView = (TextView) find(view, resId);
         if (htmlText == null) {
             textView.setText("");
         } else {
@@ -100,33 +101,55 @@ public class Views {
         return textView;
     }
 
-    public static TextView textIfFind(View view, int resId, String text) {
-        TextView textView = (TextView) view.findViewById(resId);
+    public static TextView textIfFind(Object view, final int resId, final String text) {
+        TextView textView = (TextView) find(view, resId);
         if (textView != null) {
             textView.setText(text);
         }
         return textView;
     }
 
-    public static void goneAll(View view, int... resIds) {
+    public static void gone(final Object view, final int... resIds) {
         for (int resId : resIds) {
-            View viewById = view.findViewById(resId);
+            View viewById = find(view, resId);
             if (viewById != null) {
                 viewById.setVisibility(View.GONE);
             }
         }
     }
 
-    public static void goneAll(Activity activty, int... resIds) {
+    public static void unselect(final Object view, final int... resIds) {
         for (int resId : resIds) {
-            View viewById = activty.findViewById(resId);
-            if (viewById != null) {
-                viewById.setVisibility(View.GONE);
-            }
+            View viewById = find(view, resId);
+            viewById.setSelected(false);
         }
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    public static void unselect(final List<View> viewIds) {
+        for (View view : viewIds) {
+            view.setSelected(false);
+        }
+    }
+
+    public static void unselect(final View... viewIds) {
+        for (View view : viewIds) {
+            view.setSelected(false);
+        }
+    }
+
+    public static void unchecked(final View... viewIds) {
+        for (View view : viewIds) {
+            view.setSelected(false);
+        }
+    }
+
+    public static void unselectChilds(final LinearLayout layout) {
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            layout.getChildAt(i).setSelected(false);
+        }
+    }
+
+    public static void setListViewHeightBasedOnChildren(final ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition

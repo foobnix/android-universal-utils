@@ -57,9 +57,9 @@ public class JSONSerializerTest extends AndroidTestCase {
         in.enum1 = DemoEnum.ONE;
         in.enum2 = null;
 
-        in.map1 = new HashMap<>();
+        in.map1 = new HashMap<String, Integer>();
         in.map2 = null;
-        in.map3 = new HashMap<>();
+        in.map3 = new HashMap<String, Integer>();
         in.map3.put("key1", 1);
         in.map3.put("key2", 2);
         in.map3.put("key3", 3);

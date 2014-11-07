@@ -9,6 +9,27 @@ buildscript {
 }
 
 apply plugin: 'android-library'
+apply plugin: 'maven'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:///home/ivan/mvn")
+            pom.groupId = "com.foobnix.android.utils"
+            pom.artifactId = 'universal-android-utils'
+            pom.version = '1.0'
+            pom.project {
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+            }
+        }
+    }
+}
 
 ext {
     buildVesion = ""
@@ -16,8 +37,8 @@ ext {
 
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
 
     sourceSets {
            main {

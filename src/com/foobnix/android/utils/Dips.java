@@ -10,26 +10,27 @@ import android.view.WindowManager;
 
 public class Dips {
 
-    public static int dpToPx(int dp) {
+    public static int dpToPx(final int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
-    public static int pxToDp(int px) {
+    public static int pxToDp(final int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
     }
 
-    public static int screenWidth(Context context) {
+    public static int screenWidth(final Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(metrics);
         return metrics.widthPixels;
     }
 
-    public static int screenHeight(Context context) {
+    public static int screenHeight(final Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(metrics);
         return metrics.heightPixels;
     }
+
 
 }

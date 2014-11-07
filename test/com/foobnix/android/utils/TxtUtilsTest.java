@@ -21,5 +21,6 @@ public class TxtUtilsTest extends TestCase {
     public void test_join() {
         assertEquals("a|b|1|2", TxtUtils.join("|", "a", "b", "1", "2"));
         assertEquals("1 2 a b", TxtUtils.join(" ", 1, 2, "a", "b"));
+        assertEquals("1, 2, a, b", TxtUtils.join(", ", 1, 2, "a", "b"));
     }
 }
