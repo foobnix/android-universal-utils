@@ -56,17 +56,10 @@ Inject views by it names as id
 @ResId Spinner spinnerCountry, spinnerState;
 @ResId CheckBox checkPrivateSeller;
 ...
+
 View view = inflater.inflate(R.layout.my_account, container, false);
+//Activate annotation in current Fragment
 ResInjector.inject(view, this);
-
-spinnerCountry.setAdapter(new BaseItemLayoutAdapter<Country>(getActivity(), android.R.layout.simple_spinner_item, countries) {
-
-    @Override
-    public void populateView(View view, int pos, Country item) {
-        Views.text(view, android.R.id.text1).setText(item.getName());
-
-    }
-});
 
 @ResIdOnClick
 public void buttonSave() {
