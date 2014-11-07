@@ -57,9 +57,13 @@ Inject views by it names as id
 @ResId CheckBox checkPrivateSeller;
 ...
 
-View view = inflater.inflate(R.layout.my_account, container, false);
+
 //Activate annotation in current Fragment
-ResInjector.inject(view, this);
+public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	View view = inflater.inflate(R.layout.my_account, container, false);
+	ResInjector.inject(view, this, savedInstanceState);
+...
+}
 
 @ResIdOnClick
 public void buttonSave() {
