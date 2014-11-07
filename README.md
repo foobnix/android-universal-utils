@@ -57,17 +57,11 @@ Inject views by it names as id
 @ResId CheckBox checkPrivateSeller;
 ...
 
-
 //Activate annotation in current Fragment
 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	View view = inflater.inflate(R.layout.my_account, container, false);
 	ResInjector.inject(view, this, savedInstanceState);
 ...
-}
-
-@ResIdOnClick
-public void buttonSave() {
-	...
 }
 
 @ResIdOnClick(R.id.userProfile)
@@ -76,7 +70,7 @@ public void onProfile(View view) {//with View param
 }
 
 @ResIdOnLongClick(R.id.buttonSave)
-public void buttonSaveLongClickAnyName() {
+public void buttonSaveLongClick() {
 	...
 }
 
@@ -84,7 +78,6 @@ public void buttonSaveLongClickAnyName() {
 public static final String EXTRA_DEMO = "Demo_ARG";
 @ExtraArgument(EXTRA_DEMO)
 String helloWorld;
-
 
 //Run this method every 1 second
 @TickTimer(1000)
@@ -95,7 +88,6 @@ public void updateEndDate() {
 //Save param state on rotation
 @SaveState
 private int timer = 0, currentTab = 0;
-
 
 ```
 ## Views
