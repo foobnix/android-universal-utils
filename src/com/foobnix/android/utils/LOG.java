@@ -19,6 +19,17 @@ public class LOG {
         }
     }
 
+    public static void dMeta(Object... statement) {
+        String meta = null;
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        if (stackTrace.length > 3) {
+            meta = asString(stackTrace[3].getClassName(), stackTrace[3].getMethodName(), stackTrace[3].getLineNumber());
+        }
+
+        d(meta, asString(statement));
+
+    }
+
     public static void e(Throwable e, Object... statement) {
         if (isEnable) {
             Log.e(TAG, asString(statement), e);
