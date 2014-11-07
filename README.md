@@ -61,6 +61,8 @@ Inject views by it names as id
 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	View view = inflater.inflate(R.layout.my_account, container, false);
 	ResInjector.inject(view, this, savedInstanceState);
+
+	editAddress1.setText("Hello Android Reflection");
 ...
 }
 
