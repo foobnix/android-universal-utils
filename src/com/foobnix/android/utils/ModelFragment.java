@@ -9,6 +9,11 @@ import android.support.v4.app.Fragment;
 
 public abstract class ModelFragment<T extends Serializable> extends Fragment {
     public static final String EXTRA_FRAGMENT_MODEL = "model";
+
+    public static final String EXTRA_ARGUMENT_1 = "EXTRA_ARGIMENT_1";
+    public static final String EXTRA_ARGUMENT_2 = "EXTRA_ARGIMENT_2";
+    public static final String EXTRA_ARGUMENT_3 = "EXTRA_ARGIMENT_3";
+
     private Handler handler;
 
     private Runnable onPauseLintener;

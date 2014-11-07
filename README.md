@@ -81,6 +81,15 @@ public static final String EXTRA_DEMO = "Demo_ARG";
 @ExtraArgument(EXTRA_DEMO)
 String helloWorld;
 
+//EXTRA_ARGUMENT_1, EXTRA_ARGUMENT_2, EXTRA_ARGUMENT_3
+bundle.putString(MyFragment.EXTRA_ARGUMENT_1, "YOOO");
+fragment.setArguments(withSerializable);
+
+@ExtraArgument_1
+String myValue;
+
+
+
 //Run this method every 1 second
 @TickTimer(1000)
 public void updateEndDate() {

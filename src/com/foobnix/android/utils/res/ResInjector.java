@@ -165,21 +165,26 @@ public class ResInjector {
             }
             if (field.isAnnotationPresent(ExtraArgument.class)) {
                 ExtraArgument annotation = field.getAnnotation(ExtraArgument.class);
-                Bundle arguments = fragment.getArguments();
                 String key = annotation.value();
+                applyExtraArgumentAnnotation(fragment, field, key);
+            }
 
-                if (arguments != null && arguments.containsKey(key)) {
-                    if (!(field.getType() instanceof Serializable)) {
-                        throw new RuntimeException("Field should be Serializable " + field.getName());
-                    }
-                    Object value = arguments.getSerializable(key);
-                    field.setAccessible(true);
-                    try {
-                        field.set(fragment, value);
-                    } catch (Exception e) {
-                        LOG.e(e);
-                    }
-                }
+            if (field.isAnnotationPresent(ExtraArgument_1.class)) {
+                ExtraArgument_1 annotation = field.getAnnotation(ExtraArgument_1.class);
+                String key = annotation.value();
+                applyExtraArgumentAnnotation(fragment, field, key);
+            }
+
+            if (field.isAnnotationPresent(ExtraArgument_2.class)) {
+                ExtraArgument_2 annotation = field.getAnnotation(ExtraArgument_2.class);
+                String key = annotation.value();
+                applyExtraArgumentAnnotation(fragment, field, key);
+            }
+
+            if (field.isAnnotationPresent(ExtraArgument_3.class)) {
+                ExtraArgument_3 annotation = field.getAnnotation(ExtraArgument_3.class);
+                String key = annotation.value();
+                applyExtraArgumentAnnotation(fragment, field, key);
             }
         }
 
@@ -273,6 +278,22 @@ public class ResInjector {
 
 
 
+    }
+
+    private static void applyExtraArgumentAnnotation(final ModelFragment<?> fragment, Field field, String key) {
+        Bundle arguments = fragment.getArguments();
+        if (arguments != null && arguments.containsKey(key)) {
+            if (!(field.getType() instanceof Serializable)) {
+                throw new RuntimeException("Field should be Serializable " + field.getName());
+            }
+            Object value = arguments.getSerializable(key);
+            field.setAccessible(true);
+            try {
+                field.set(fragment, value);
+            } catch (Exception e) {
+                LOG.e(e);
+            }
+        }
     }
 
     public static void onDestroy(Object obj) {
