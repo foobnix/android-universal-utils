@@ -83,6 +83,19 @@ public void buttonSaveLongClickAnyName() {
 	...
 }
 
+//Get Arguments
+public static final String EXTRA_DEMO = "Demo_ARG";
+@ExtraArgument(EXTRA_DEMO)
+String helloWorld;
+
+
+//Run this method every 1 second
+@TickTimer(1000)
+public void updateEndDate() {
+...
+}
+
+
 ```
 ## Views
 ```java
