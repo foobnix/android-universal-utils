@@ -11,7 +11,6 @@ import com.foobnix.android.utils.ModelFragment;
 import com.foobnix.android.utils.R;
 import com.foobnix.android.utils.res.ExtraArgument_1;
 import com.foobnix.android.utils.res.ResId;
-import com.foobnix.android.utils.res.ResIdOnClick;
 import com.foobnix.android.utils.res.ResInjector;
 import com.foobnix.android.utils.res.SaveState;
 
@@ -39,7 +38,7 @@ public class ModelExampleFragment extends ModelFragment<User> {
         return view;
     }
 
-    @ResIdOnClick(R.id.onLogin)
+    // @ResIdOnClick(R.id.onLogin)
     public void onLogin() {
         saveModel();
         // doLoginUser(model);

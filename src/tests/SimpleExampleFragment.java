@@ -10,7 +10,6 @@ import com.foobnix.android.utils.EmptyModelFragment;
 import com.foobnix.android.utils.R;
 import com.foobnix.android.utils.res.ExtraArgument_1;
 import com.foobnix.android.utils.res.ResId;
-import com.foobnix.android.utils.res.ResIdOnClick;
 import com.foobnix.android.utils.res.ResInjector;
 import com.foobnix.android.utils.res.SaveState;
 
@@ -33,7 +32,7 @@ public class SimpleExampleFragment extends EmptyModelFragment {
         return view;
     }
 
-    @ResIdOnClick(R.id.onLogin)
+    // @ResIdOnClick(R.id.onLogin)
     public void doAction() {
 
     }
