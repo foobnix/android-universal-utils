@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-public @interface ResIdOnClick {
-    int value();
+public @interface TickTimer {
+    int value() default 1000;
 }

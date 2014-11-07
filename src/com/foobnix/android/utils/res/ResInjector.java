@@ -1,5 +1,6 @@
 package com.foobnix.android.utils.res;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -7,12 +8,17 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 
 import com.foobnix.android.utils.Apps;
 import com.foobnix.android.utils.LOG;
+import com.foobnix.android.utils.ModelFragment;
+import com.foobnix.android.utils.ResultResponse;
 
 public class ResInjector {
 
@@ -20,22 +26,66 @@ public class ResInjector {
     private static String PACKAGE_NAME;
     private static Map<String, Integer> cache = new HashMap<String, Integer>();
 
-    public static void inject(View view, android.support.v4.app.Fragment obj) {
+    public static void inject(View view, ModelFragment<?> obj, Bundle bundle) {
         if (PACKAGE_NAME == null) {
             PACKAGE_NAME = Apps.getPackageName(view.getContext());
         }
         injectInner(view, obj);
-    }
-
-    public static void inject(View view, android.app.Fragment obj) {
-        if (PACKAGE_NAME == null) {
-            PACKAGE_NAME = Apps.getPackageName(view.getContext());
-        }
-        injectInner(view, obj);
+        onRestoreInstanceState(obj, bundle);
     }
 
     public static void inject(Activity obj) {
         new RuntimeException("Use Fragments");
+    }
+
+    private static void onRestoreInstanceState(Object f, Bundle outState) {
+        if (outState == null) {
+            return;
+        }
+        for (Field field : f.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(SaveState.class)) {
+                String name = field.getName();
+                field.setAccessible(true);
+                try {
+                    if (outState.containsKey(name)) {
+                        field.set(f, outState.get(name));
+                    }
+                } catch (Exception e) {
+                    LOG.e(e);
+                }
+            }
+        }
+    }
+
+    private static void onSaveInstanceState(Object f, Bundle outState) {
+        if (outState == null) {
+            return;
+        }
+        for (Field field : f.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(SaveState.class)) {
+                String name = field.getName();
+                field.setAccessible(true);
+                try {
+                    Object value = field.get(f);
+                    Class<?> type = field.getType();
+                    if (type.equals(String.class)) {
+                        outState.putString(name, (String) value);
+                    } else if (type.equals(Integer.class)) {
+                        outState.putInt(name, (Integer) value);
+                    } else if (type.equals(Boolean.class)) {
+                        outState.putBoolean(name, (Boolean) value);
+                    } else if (type instanceof Serializable) {
+                        outState.putSerializable(name, (Serializable) value);
+                    } else if (type instanceof Serializable) {
+                        outState.putParcelable(name, (Parcelable) value);
+                    } else {
+                        throw new RuntimeException("Not supported type " + type + " " + field.getName());
+                    }
+                } catch (Exception e) {
+                    LOG.e(e);
+                }
+            }
+        }
     }
 
     public static void preCacheViews(Context c, Class<?>... fragments) {
@@ -91,17 +141,44 @@ public class ResInjector {
         return resID;
     }
 
-    private static void injectInner(View view, final Object obj) {
-        Class<? extends Object> clazz = obj.getClass();
+    private static void injectInner(View view, final ModelFragment<?> fragment) {
+        Class<? extends Object> clazz = fragment.getClass();
+
+        fragment.setOnSaveInstanceState(new ResultResponse<Bundle>() {
+            @Override
+            public boolean onResultRecive(Bundle outState) {
+                onSaveInstanceState(fragment, outState);
+                return false;
+            }
+        });
+
         for (Field field : clazz.getDeclaredFields()) {
             if (field.isAnnotationPresent(ResId.class)) {
                 int resID = findResID(field.getName(), view.getContext());
                 View findViewById = view.findViewById(resID);
                 field.setAccessible(true);
                 try {
-                    field.set(obj, findViewById);
+                    field.set(fragment, findViewById);
                 } catch (Exception e) {
                     LOG.e(e);
+                }
+            }
+            if (field.isAnnotationPresent(ExtraArgument.class)) {
+                ExtraArgument annotation = field.getAnnotation(ExtraArgument.class);
+                Bundle arguments = fragment.getArguments();
+                String key = annotation.value();
+
+                if (arguments != null && arguments.containsKey(key)) {
+                    if (!(field.getType() instanceof Serializable)) {
+                        throw new RuntimeException("Field should be Serializable " + field.getName());
+                    }
+                    Object value = arguments.getSerializable(key);
+                    field.setAccessible(true);
+                    try {
+                        field.set(fragment, value);
+                    } catch (Exception e) {
+                        LOG.e(e);
+                    }
                 }
             }
         }
@@ -121,9 +198,9 @@ public class ResInjector {
                         try {
                             Class<?>[] parameterTypes = method.getParameterTypes();
                             if (parameterTypes.length == 1) {
-                                method.invoke(obj, v);
+                                method.invoke(fragment, v);
                             } else {
-                                method.invoke(obj);
+                                method.invoke(fragment);
                             }
                         } catch (Exception e) {
                             LOG.e(e);
@@ -147,9 +224,9 @@ public class ResInjector {
                         try {
                             Class<?>[] parameterTypes = method.getParameterTypes();
                             if (parameterTypes.length == 1) {
-                                method.invoke(obj, v);
+                                method.invoke(fragment, v);
                             } else {
-                                method.invoke(obj);
+                                method.invoke(fragment);
                             }
                         } catch (Exception e) {
                             LOG.e(e);
@@ -157,13 +234,48 @@ public class ResInjector {
                         return true;
                     }
                 });
+            }
 
+            if (method.isAnnotationPresent(TickTimer.class)) {
+                final TickTimer annotation = method.getAnnotation(TickTimer.class);
+
+                final Handler handler = fragment.getHandler();
+
+                final Runnable run = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            method.invoke(fragment);
+                        } catch (Exception e) {
+                            LOG.e(e);
+                        }
+                        handler.postDelayed(this, annotation.value());
+                    }
+                };
+
+                fragment.setOnPauseLintener(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        handler.removeCallbacksAndMessages(null);
+                    }
+                });
+                fragment.setOnResumeLintener(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        handler.post(run);
+                    }
+                });
             }
         }
 
+
+
     }
 
-    public static void reset(Object obj) {
+    public static void onDestroy(Object obj) {
         Class<? extends Object> clazz = obj.getClass();
         for (Field field : clazz.getDeclaredFields()) {
             if (field.isAnnotationPresent(ResId.class)) {
