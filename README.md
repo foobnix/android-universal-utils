@@ -95,6 +95,10 @@ public void updateEndDate() {
 ...
 }
 
+//Save param state on rotation
+@SaveState
+private int timer = 0, currentTab = 0;
+
 
 ```
 ## Views
