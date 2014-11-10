@@ -101,7 +101,11 @@ public void updateEndDate() {
 private int timer = 0, currentTab = 0;
 
 ```
+<<<<<<< HEAD
 ## ResInjector copy model into view or view into model
+=======
+## ResInjector map view
+>>>>>>> refs/remotes/origin/master
 ```java
 public class Account implements Serializable {
     @ResId(R.id.editAddress1) private String address1;
