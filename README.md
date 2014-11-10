@@ -101,6 +101,20 @@ public void updateEndDate() {
 private int timer = 0, currentTab = 0;
 
 ```
+## ResInjector map view
+```java
+public class Account implements Serializable {
+    @ResId(R.id.editAddress1) private String address1;
+    @ResId(R.id.editAddress2) private String address2;
+}
+
+//populate views
+ResInjector.copyModelToView(model, view);
+
+//get Views values
+ResInjector.copyViewToModel(view, model);
+```
+
 ## Views
 ```java
 //before

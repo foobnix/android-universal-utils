@@ -3,8 +3,13 @@ package com.foobnix.android.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.provider.Settings.Secure;
 
 public class Apps {
+
+    public static String getAndoroidID(Context c) {
+        return Secure.getString(c.getContentResolver(), Secure.ANDROID_ID);
+    }
 
     public static boolean isPackageInstalled(String packageName, Context context) {
         try {

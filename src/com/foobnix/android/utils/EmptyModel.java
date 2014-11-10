@@ -4,4 +4,8 @@ import java.io.Serializable;
 
 public class EmptyModel implements Serializable {
 
+    public EmptyModel() {
+
+    }
+
 }

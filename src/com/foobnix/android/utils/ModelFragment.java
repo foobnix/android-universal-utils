@@ -37,11 +37,15 @@ public abstract class ModelFragment<T extends Serializable> extends Fragment {
         }
         if (model == null) {
             try {
+                if (this instanceof EmptyModelFragment) {
+                    return;
+                }
                 ParameterizedType pt = (ParameterizedType) getClass().getGenericSuperclass();
                 Class<?> type = (Class<?>) pt.getActualTypeArguments()[0];
                 LOG.d("Model Fragment class name", type.getName());
                 model = (T) type.newInstance();
             } catch (Exception e) {
+
                 throw new RuntimeException(e.getCause());
             }
         }

@@ -6,20 +6,25 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.foobnix.android.utils.Apps;
 import com.foobnix.android.utils.LOG;
 import com.foobnix.android.utils.ModelFragment;
 import com.foobnix.android.utils.ResultResponse;
 
+@SuppressLint("NewApi")
 public class ResInjector {
 
     private static final String ID = "id";
@@ -76,8 +81,8 @@ public class ResInjector {
                         outState.putBoolean(name, (Boolean) value);
                     } else if (type instanceof Serializable) {
                         outState.putSerializable(name, (Serializable) value);
-                    } else if (type instanceof Serializable) {
-                        outState.putParcelable(name, (Parcelable) value);
+                        // } else if (type instanceof Parcelable) {
+                        // outState.putParcelable(name, (Parcelable) value);
                     } else {
                         throw new RuntimeException("Not supported type " + type + " " + field.getName());
                     }
@@ -88,44 +93,79 @@ public class ResInjector {
         }
     }
 
-    public static void preCacheViews(Context c, Class<?>... fragments) {
+    public static void copyModelToView(Object model, View view) {
         if (PACKAGE_NAME == null) {
-            PACKAGE_NAME = Apps.getPackageName(c);
+            PACKAGE_NAME = Apps.getPackageName(view.getContext());
         }
-        for (Class<?> clazz : fragments) {
-            // Class<? extends Fragment> = f.getClass();
-            for (Field field : clazz.getDeclaredFields()) {
-                if (field.isAnnotationPresent(ResId.class)) {
-                    cacheResID(field.getName(), c);
+        Field[] declaredFields = model.getClass().getDeclaredFields();
+        for (final Field field : declaredFields) {
+            if (field.isAnnotationPresent(ResId.class)) {
+                ResId annotation = field.getAnnotation(ResId.class);
+                int resID = annotation.value();
+                if (resID == 0) {
+                    throw new RuntimeException("Res Id not found" + field.getName());
                 }
-            }
+                try {
+                    View findViewById = view.findViewById(resID);
+                    if (findViewById instanceof Switch) {
+                        field.setAccessible(true);
+                        ((Switch) findViewById).setChecked(field.getBoolean(model));
+                    } else if (findViewById instanceof CheckBox) {
+                        field.setAccessible(true);
+                        ((CheckBox) findViewById).setChecked(field.getBoolean(model));
+                    } else if (findViewById instanceof EditText) {
+                        field.setAccessible(true);
+                        ((EditText) findViewById).setText(field.get(model).toString());
+                    } else if (findViewById instanceof TextView) {
+                        field.setAccessible(true);
+                        ((TextView) findViewById).setText(field.get(model).toString());
+                    } else {
+                        throw new RuntimeException("copyModelToView View not mapped " + field.getName());
+                    }
 
-            for (final Method method : clazz.getDeclaredMethods()) {
-                if (method.isAnnotationPresent(ResIdOnClick.class)) {
-                    ResIdOnClick annotation = method.getAnnotation(ResIdOnClick.class);
-                    if (annotation.value() == 0) {
-                        cacheResID(method.getName(), c);
-                    }
-                }
-                if (method.isAnnotationPresent(ResIdOnLongClick.class)) {
-                    ResIdOnLongClick annotation = method.getAnnotation(ResIdOnLongClick.class);
-                    if (annotation.value() == 0) {
-                        cacheResID(method.getName(), c);
-                    }
+                } catch (Exception e) {
+                    LOG.e(e);
                 }
             }
         }
     }
 
-    private static void cacheResID(String name, Context c) {
-        if (cache.containsKey(name)) {
-            return;
+    public static void copyViewToModel(View view, Object model) {
+        if (PACKAGE_NAME == null) {
+            PACKAGE_NAME = Apps.getPackageName(view.getContext());
         }
-        int resID = c.getResources().getIdentifier(name, ID, PACKAGE_NAME);
-        if (resID == 0) {
-            throw new RuntimeException(String.format("View Id not found %s", name));
+        Field[] declaredFields = model.getClass().getDeclaredFields();
+        for (final Field field : declaredFields) {
+            if (field.isAnnotationPresent(ResId.class)) {
+                ResId annotation = field.getAnnotation(ResId.class);
+                int resID = annotation.value();
+                if (resID == 0) {
+                    throw new RuntimeException("copyViewToModel View not mapped " + field.getName());
+                }
+
+                try {
+                    View findViewById = view.findViewById(resID);
+                    if (findViewById instanceof Switch) {
+                        field.setAccessible(true);
+                        field.set(model, ((Switch) findViewById).isChecked());
+                    } else if (findViewById instanceof CheckBox) {
+                        field.setAccessible(true);
+                        field.set(model, ((CheckBox) findViewById).isChecked());
+                    } else if (findViewById instanceof EditText) {
+                        field.setAccessible(true);
+                        field.set(model, ((EditText) findViewById).getText().toString());
+                    } else if (findViewById instanceof TextView) {
+                        field.setAccessible(true);
+                        field.set(model, ((TextView) findViewById).getText().toString());
+                    } else {
+                        throw new RuntimeException("View not mapped " + field.getName());
+                    }
+
+                } catch (Exception e) {
+                    LOG.e(e);
+                }
+            }
         }
-        cache.put(name, resID);
 
     }
 
@@ -154,7 +194,11 @@ public class ResInjector {
 
         for (Field field : clazz.getDeclaredFields()) {
             if (field.isAnnotationPresent(ResId.class)) {
-                int resID = findResID(field.getName(), view.getContext());
+                ResId annotation = field.getAnnotation(ResId.class);
+                int resID = annotation.value();
+                if (resID == 0) {
+                    resID = findResID(field.getName(), view.getContext());
+                }
                 View findViewById = view.findViewById(resID);
                 field.setAccessible(true);
                 try {
@@ -276,8 +320,6 @@ public class ResInjector {
             }
         }
 
-
-
     }
 
     private static void applyExtraArgumentAnnotation(final ModelFragment<?> fragment, Field field, String key) {
@@ -292,20 +334,6 @@ public class ResInjector {
                 field.set(fragment, value);
             } catch (Exception e) {
                 LOG.e(e);
-            }
-        }
-    }
-
-    public static void onDestroy(Object obj) {
-        Class<? extends Object> clazz = obj.getClass();
-        for (Field field : clazz.getDeclaredFields()) {
-            if (field.isAnnotationPresent(ResId.class)) {
-                field.setAccessible(true);
-                try {
-                    field.set(obj, null);
-                } catch (IllegalAccessException e) {
-                    LOG.e(e);
-                }
             }
         }
     }
