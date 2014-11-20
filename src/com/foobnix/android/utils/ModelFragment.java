@@ -28,6 +28,16 @@ public abstract class ModelFragment<T extends Serializable> extends Fragment {
         prepareModelFromArgumentOrBundle(savedInstanceState);
     }
 
+    public ModelFragment<T> withBundles(Bundles bundles) {
+        setArguments(bundles.build());
+        return this;
+    }
+
+    public ModelFragment<T> withBundle(Bundle bundle) {
+        setArguments(bundle);
+        return this;
+    }
+
     private void prepareModelFromArgumentOrBundle(Bundle savedInstanceState) {
         if (getArguments() != null && getArguments().containsKey(EXTRA_FRAGMENT_MODEL)) {
             model = (T) getArguments().getSerializable(EXTRA_FRAGMENT_MODEL);

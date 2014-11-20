@@ -1,5 +1,6 @@
 package com.foobnix.android.utils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -147,6 +149,43 @@ public class Views {
         for (int i = 0; i < layout.getChildCount(); i++) {
             layout.getChildAt(i).setSelected(false);
         }
+    }
+
+    public static void uncheckedChilds(final LinearLayout layout) {
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            View childAt = layout.getChildAt(i);
+            if (childAt instanceof CheckBox) {
+                ((CheckBox) childAt).setChecked(false);
+            }
+        }
+    }
+
+    public static void forAllChilds(final LinearLayout layout, String field, Object value) {
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            View childAt = layout.getChildAt(i);
+
+            try {
+                Field field2 = childAt.getClass().getField(field);
+                field2.setAccessible(true);
+                field2.set(childAt, value);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    public static <T> List<T> findChilds(final ViewGroup layout, Class<T> type) {
+        List<T> childs = new ArrayList<T>();
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            View childAt = layout.getChildAt(i);
+            if (childAt.getVisibility() == View.VISIBLE && childAt instanceof ViewGroup) {
+                childs.addAll(findChilds((ViewGroup) childAt, type));
+            } else if (childAt.getVisibility() == View.VISIBLE && childAt.getClass().equals(type)) {
+                childs.add((T) childAt);
+            }
+        }
+        return childs;
     }
 
     public static void setListViewHeightBasedOnChildren(final ListView listView) {

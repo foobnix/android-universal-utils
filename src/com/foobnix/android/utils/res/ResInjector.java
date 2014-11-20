@@ -115,10 +115,12 @@ public class ResInjector {
                         ((CheckBox) findViewById).setChecked(field.getBoolean(model));
                     } else if (findViewById instanceof EditText) {
                         field.setAccessible(true);
-                        ((EditText) findViewById).setText(field.get(model).toString());
+                        Object value = field.get(model);
+                        ((EditText) findViewById).setText(value == null ? "" : value.toString());
                     } else if (findViewById instanceof TextView) {
                         field.setAccessible(true);
-                        ((TextView) findViewById).setText(field.get(model).toString());
+                        Object value = field.get(model);
+                        ((TextView) findViewById).setText(value == null ? "" : value.toString());
                     } else {
                         throw new RuntimeException("copyModelToView View not mapped " + field.getName());
                     }
