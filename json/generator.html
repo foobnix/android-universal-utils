@@ -11,9 +11,18 @@ $(document).ready(function() {
     var lang = '';   
     
     function printVars(){
-        
+        var isGsonAnnotaion = $("#isGsonAnnotaion").prop('checked');
         for(key in map){
-         lang += "private "+ map[key] + "  "+key+""+  ";<br/>";   
+         var key2 = key;
+         if(isGsonAnnotaion){
+         	lang += '@SerializedName("' +key+'")'+'<br/>';
+         	key2 = key2.charAt(0).toLowerCase() + key2.slice(1);
+         }
+         lang += "private "+ map[key] + "  "+key2+""+  ";<br/>";   
+         
+          if(isGsonAnnotaion){
+          	lang += "<br/>";
+          }
         }
        
     }
@@ -348,8 +357,8 @@ var fact = [
         <td>
 <textarea id="mytextarea1" cols="50" rows="10" >
 {
-    "auctionHouse": "sample string 1",
-    "bidDate": "2014-05-30T08:20:38.5426521-04:00 ",
+    "AuctionHouse": "sample string 1",
+    "BidDate": "2014-05-30T08:20:38.5426521-04:00 ",
     "bidPrice": 3,
     "bidPrice1": 3.1,
     "isYear":true
@@ -387,12 +396,11 @@ private  Date date;
         <td><input type="button" id="button2" value="Submit" /></td>
     </tr>
 </table>
-
+<input type="checkbox" id="isGsonAnnotaion"  />Gson Annotation<br/>
 <input type="checkbox" id="isPrimitives"  />Prefer Primitives<br/>
-
-<input type="checkbox" id="isBundle" checked="checked" />Bundle<br/>
-<input type="checkbox" id="isJSONObject" checked="checked" />JSONObject<br/>
-<input type="checkbox" id="isParcelable"  checked="checked" />Parcelable <br/>
+<input type="checkbox" id="isBundle" />Bundle<br/>
+<input type="checkbox" id="isJSONObject"  />JSONObject<br/>
+<input type="checkbox" id="isParcelable"   />Parcelable <br/>
 <input type="checkbox" id="isDateAsString" />Date As String<br/>
 
 
