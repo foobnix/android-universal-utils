@@ -20,6 +20,13 @@ import android.widget.TextView;
 
 public class Views {
 
+    public static View activate(View view, boolean isActive) {
+        view.setFocusable(isActive);
+        view.setFocusableInTouchMode(isActive);
+        view.setClickable(isActive);
+        return view;
+    }
+
     public static View find(final Object o, final int resId) {
         if (o instanceof Activity) {
             return ((Activity) o).findViewById(resId);
@@ -173,7 +180,6 @@ public class Views {
             }
         }
     }
-
 
     public static <T> List<T> findChilds(final ViewGroup layout, Class<T> type) {
         List<T> childs = new ArrayList<T>();
