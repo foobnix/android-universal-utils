@@ -51,6 +51,11 @@ public abstract class BaseItemAdapter<T> extends BaseAdapter {
         this.items = items;
     }
 
+    public void updateItems(List<T> items) {
+        items.clear();
+        addItems(items);
+    }
+
     @Override
     public int getCount() {
         return items.size();

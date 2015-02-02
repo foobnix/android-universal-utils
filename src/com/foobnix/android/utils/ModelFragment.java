@@ -55,7 +55,6 @@ public abstract class ModelFragment<T extends Serializable> extends Fragment {
                 LOG.d("Model Fragment class name", type.getName());
                 model = (T) type.newInstance();
             } catch (Exception e) {
-
                 throw new RuntimeException(e.getCause());
             }
         }

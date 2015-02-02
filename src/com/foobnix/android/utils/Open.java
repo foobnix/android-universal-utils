@@ -32,6 +32,16 @@ public class Open {
         }
     }
 
+    public static void email(Context c, String email, String subject, String body) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, email);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        // c.startActivity(Intent.createChooser(intent, "Send Email"));
+        c.startActivity(intent);
+    }
+
     public static void map(Context c, double lat, double lon) {
         StringBuilder res = new StringBuilder();
         res.append(String.format(Locale.ENGLISH, "geo:%f,%f", lat, lon));
